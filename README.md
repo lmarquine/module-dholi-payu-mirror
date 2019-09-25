@@ -1,4 +1,4 @@
-# Integração PayU para Magento 2
+# Integração PayU para Magento 2 CE
 
 A PayU é uma solução completa em pagamentos online, presente em quatro continentes. A PayU oferece serviços financeiros para compradores e vendedores pela internet.
 
