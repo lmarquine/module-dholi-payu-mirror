@@ -3,7 +3,7 @@
   "type": "magento2-component",
   "description": "dholi.dev - PayU Payment Module",
   "version": "dev-master",
-  "homepage": "https://github.com/dholidev/module-dholi-payu",
+  "homepage": "https://github.com/dholidev/module-dholi-payu-mirror",
   "keywords": [
     "magento",
     "magento2",
