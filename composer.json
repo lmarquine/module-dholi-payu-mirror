@@ -1,7 +1,7 @@
 {
   "name": "dholi/module-dholi-payu",
   "type": "magento2-component",
-  "description": "dholi.dev - PayU Payment Module",
+  "description": "dholi.dev - PayU Payment Integration for Magento 2",
   "version": "dev-master",
   "homepage": "https://github.com/dholidev/module-dholi-payu-mirror",
   "keywords": [
