@@ -1,0 +1,81 @@
+<?php
+/**
+* 
+* PayU para Magento
+* 
+* @category     Dholi
+* @package      Modulo PayU
+* @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
+* @version      1.0.0
+* @license      https://www.dholi.dev/license/
+*
+*/
+declare(strict_types=1);
+
+namespace Dholi\PayU\Gateway\Request\Payment;
+
+use Dholi\PayU\Gateway\PayU\Enumeration\PaymentMethod;
+use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Framework\UrlInterface;
+use Magento\Payment\Gateway\ConfigInterface;
+use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Payment\Gateway\Request\BuilderInterface;
+use Magento\Sales\Model\OrderRepository;
+
+class CreditCardDataBuilder implements BuilderInterface {
+
+	const CREDIT_CARD = 'creditCard';
+
+	const NUMBER = 'number';
+
+	const SECURITY_CODE = 'securityCode';
+
+	const EXPIRATION_DATE = 'expirationDate';
+
+	const NAME = 'name';
+
+	const PAYMENT_METHOD = 'paymentMethod';
+
+	const COOKIE = 'cookie';
+
+	const USER_AGENT = 'userAgent';
+
+	protected $encryptor;
+
+	public function __construct(EncryptorInterface $encryptor) {
+		$this->encryptor = $encryptor;
+	}
+
+	/**
+	 * Builds ENV request
+	 *
+	 * @param array $buildSubject
+	 * @return array
+	 */
+	public function build(array $buildSubject) {
+		$paymentDataObject = SubjectReader::readPayment($buildSubject);
+		$payment = $paymentDataObject->getPayment();
+
+		/**
+		 * Credit Card
+		 */
+		$creditCardNumber = $this->encryptor->decrypt($payment->getAdditionalInformation('creditCardNumber'));
+		$creditCardCvv = $this->encryptor->decrypt($payment->getAdditionalInformation('creditCardCvv'));
+		$creditCardExp = $payment->getCcExpYear() . '/' . $payment->getCcExpMonth();
+
+		return [AuthorizeDataBuilder::TRANSACTION => [
+			self::CREDIT_CARD => [
+				self::NUMBER => $creditCardNumber,
+				self::EXPIRATION_DATE => $creditCardExp,
+				self::SECURITY_CODE => $creditCardCvv,
+				self::NAME => $payment->getCcOwner()
+			],
+			self::PAYMENT_METHOD => PaymentMethod::memberByKey($payment->getCcType())->getCode(),
+			self::COOKIE => $payment->getAdditionalInformation('sessionId'),
+			self::USER_AGENT => $payment->getAdditionalInformation('userAgent'),
+			'extraParameters' => [
+				'INSTALLMENTS_NUMBER' => $payment->getAdditionalInformation('installments')
+			]
+		]];
+	}
+}

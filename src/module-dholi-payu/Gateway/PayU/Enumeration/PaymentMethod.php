@@ -1,0 +1,42 @@
+<?php
+/**
+* 
+* PayU para Magento
+* 
+* @category     Dholi
+* @package      Modulo PayU
+* @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
+* @version      1.0.0
+* @license      https://www.dholi.dev/license/
+*
+*/
+declare(strict_types=1);
+
+namespace Dholi\PayU\Gateway\PayU\Enumeration;
+
+use Dholi\Core\Lib\Enumeration\AbstractMultiton;
+
+class PaymentMethod extends AbstractMultiton {
+
+	public function getCode() {
+		return $this->code;
+	}
+
+	protected static function initializeMembers() {
+		new static('boleto', 'BOLETO_BANCARIO');
+		new static('visa', 'VISA');
+		new static('elo', 'ELO');
+		new static('hipercard', 'HIPERCARD');
+		new static('mastercard', 'MASTERCARD');
+		new static('amex', 'AMEX');
+		new static('dinersclub', 'DINERS');
+	}
+
+	protected function __construct($key, $code) {
+		parent::__construct($key);
+
+		$this->code = $code;
+	}
+
+	private $code;
+}

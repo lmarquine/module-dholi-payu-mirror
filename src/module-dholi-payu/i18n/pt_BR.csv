@@ -1,0 +1,65 @@
+# -- A
+
+# -- B
+"Boleto Link","Link do boleto"
+"Boleto PDF","Pdf do boleto"
+
+# -- C
+"Credit Card","Cartão de crédito"
+"Credit Card Type", "Bandeira"
+"Card Holder Name","Titular do cartão"
+"Credit Card Number","Número do cartão"
+"Credit Card CVV","Cód. de segurança"
+"Credit Card","Cartão de crédito"
+"Click here to open the Boleto","Imprimir boleto"
+"Click here to download the Boleto PDF","Baixar PDF do boleto"
+
+# -- D
+"Discount first installment","Desconto à vista"
+"Invalid response platform payment.","O sistema não obteve resposta da plataforma de pagamento."
+"Dholi PayU Wrong transaction status.","O sistema não obteve um status válido de transação da PayU."
+
+# -- E
+"Error","Erro"
+
+# -- I
+"Interest","Juros"
+"Installments","Parcelas"
+"In %1x of %2","Em %1x de %2"
+
+# -- L
+"Last Credit Card Number", "Últimos digitos cartão"
+
+# -- P
+"PayU - General Settings","PayU - Configurações Gerais"
+"PayU - Boleto Settings","PayU - Boleto Bancário"
+"PayU - Credit Card Settings","PayU - Cartão de Crédito"
+"Pay %1","Pagar %1"
+"Payment from applicable countries","Pagamento para Países Selecionados"
+"Payment from Specific countries","Pagamento para Países Específicos"
+"Public Key","Chave Pública"
+"Pay With", "Pago com"
+"PayU Order ID", "Pedido na PayU"
+"PayU Transaction ID", "Transação na PayU"
+"Bar Code", "Código de Barras"
+"Production","Produção"
+"Payment Link","Link de Pagamento"
+"Process Payment","Pagar"
+"Processing...","Processando..."
+
+# -- S
+"Sending information to the payment system.","Enviando informações ao sistema de pagamento."
+
+# -- T
+"Transaction State","Status da Transação"
+"Transaction.State.APPROVED","Sua compra foi aprovada."
+"Transaction.State.DECLINED","Sua compra foi rejeitada."
+"Transaction.State.ERROR", "Erro processando a transação."
+"Transaction.State.EXPIRED", "Sua compra expirou."
+"Transaction.State.PENDING", "Sua compra está aguardando pagamento."
+"Transaction.State.SUBMITTED", "Transação enviada para a entidade financeira e por algum motivo não terminou seu processamento."
+"Transaction.State.CANCELLED","Sua compra foi rejeitada."
+
+# -- Y
+"Your payment was processed by PayU", "Sua solicitação foi processada com sucesso por PayU."
+"Your payment status is", "Status do pagamento"

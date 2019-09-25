@@ -1,0 +1,43 @@
+{
+  "name": "dholi/module-dholi-payu",
+  "type": "magento2-component",
+  "description": "dholi.dev - PayU Payment Module",
+  "version": "dev-master",
+  "homepage": "https://github.com/dholidev/module-dholi-payu",
+  "keywords": [
+    "magento",
+    "magento2",
+    "payment",
+    "payu",
+    "ecommerce"
+  ],
+  "authors": [
+    {
+      "name": "dholi.dev",
+      "email": "comunidade@dholi.dev"
+    }
+  ],
+  "require": {
+    "php": "~7.2",
+    "magento/framework": ">=102.0.2",
+    "dholi/module-dholi-platform": "dev-master"
+  },
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "src/module-dholi-payu/registration.php"
+    ],
+    "psr-4": {
+      "Dholi\\PayU\\": "src/module-dholi-payu"
+    }
+  },
+  "scripts": {
+    "pre-install-cmd": "Dholi\\PayU\\Installer::preInstall"
+  },
+  "replace": {
+
+  }
+}

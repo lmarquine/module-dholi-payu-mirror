@@ -1,0 +1,1 @@
+define(["Dholi_PayU/js/view/checkout/summary/discount"],function(a){return a.extend({isDisplayed:function(){return this.getPureValue()<0}})});
