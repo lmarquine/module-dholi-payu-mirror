@@ -1,0 +1,5 @@
+.idea/
+build/compile
+build/pdepend
+build/logs
+**/vendor
