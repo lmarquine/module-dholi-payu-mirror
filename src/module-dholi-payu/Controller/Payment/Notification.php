@@ -57,8 +57,8 @@ class Notification extends Action implements CsrfAwareActionInterface {
 			if ($data && isset($data['reference_sale']) && isset($data['state_pol'])) {
 				$order = $this->orderFactory->create()->loadByIncrementId($data['reference_sale']);
 
-				$this->logger->info(sprintf("Processando notificação. Pedido [%s] - Status [%s].", $data['reference_sale'], $data['state_pol']));
-				if ($order && !$order->isCanceled()) {
+				if ($order && $order->getId() && !$order->isCanceled()) {
+					$this->logger->info(sprintf("Processando notificação. Pedido [%s] - Status [%s].", $data['reference_sale'], $data['state_pol']));
 					$salesConnection = $this->connectionPool->getConnection('sales');
 					$salesConnection->beginTransaction();
 

@@ -10,7 +10,6 @@
 * @license      https://www.dholi.dev/license/
 *
 */
-
 declare(strict_types=1);
 
 namespace Dholi\PayU\Services\Payment;

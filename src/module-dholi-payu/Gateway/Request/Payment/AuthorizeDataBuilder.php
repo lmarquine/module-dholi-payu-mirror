@@ -15,13 +15,13 @@ declare(strict_types=1);
 namespace Dholi\PayU\Gateway\Request\Payment;
 
 use Dholi\PayU\Gateway\PayU\Enumeration\Country;
+use Dholi\PayU\Plugin\Signature;
 use Dholi\PayU\Resources\Builder;
 use Magento\Framework\UrlInterface;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Sales\Model\OrderRepository;
-use Dholi\PayU\Plugin\Signature;
 
 class AuthorizeDataBuilder implements BuilderInterface {
 
@@ -139,13 +139,13 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		 * Buyer
 		 */
 		$name = trim($shippingAddress->getFirstname()) . ' ' . trim($shippingAddress->getLastname());
+		$taxvat = preg_replace('/\D/', '', $order->getCustomerTaxvat());
 		$buyer = [
 			//self::MERCHANT_BUYER_ID => '',
 			self::FULL_NAME => substr($name, 0, 150),
 			self::EMAIL_ADDRESS => $billingAddress->getEmail(),
 			self::CONTACT_PHONE => preg_replace('/\D/', '', $shippingAddress->getTelephone()),
-			self::DNI_NUMBER => preg_replace('/\D/', '', $order->getCustomerTaxvat()),
-			//self::CNPJ => '', // TODO: melhoria
+			self::DNI_NUMBER => $taxvat,
 			self::SHIPPING_ADDRESS => [
 				self::STREET_1 => substr($shippingAddress->getStreetLine1(), 0, 100),
 				self::STREET_2 => substr($shippingAddress->getStreetLine2(), 0, 100),
@@ -156,6 +156,9 @@ class AuthorizeDataBuilder implements BuilderInterface {
 				self::PHONE => preg_replace('/\D/', '', $shippingAddress->getTelephone()),
 			]
 		];
+		if (strlen($taxvat) == 14) {
+			$buyer[self::CNPJ] = $taxvat;
+		}
 
 		/**
 		 * Order
@@ -187,11 +190,11 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		if ($payment->getAdditionalInformation('creditCardHolderAnother') && $payment->getAdditionalInformation('creditCardHolderAnother') == 1) {
 			$payerTaxVat = $payment->getAdditionalInformation('creditCardHolderCpf');
 			$payerFone = $payment->getAdditionalInformation('creditCardHolderPhone');
-			$payerBirthDate = $payment->getAdditionalInformation('creditCardHolderBirthDate');
+			//$payerBirthDate = $payment->getAdditionalInformation('creditCardHolderBirthDate');
 		} else {
 			$payerTaxVat = $order->getCustomerTaxvat();
 			$payerFone = $billingAddress->getTelephone();
-			$payerBirthDate = $order->getCustomerDob();
+			//$payerBirthDate = $order->getCustomerDob();
 		}
 
 		$name = trim($billingAddress->getFirstname()) . ' ' . trim($billingAddress->getLastname());
@@ -199,7 +202,7 @@ class AuthorizeDataBuilder implements BuilderInterface {
 			self::EMAIL_ADDRESS => $billingAddress->getEmail(),
 			//self::MERCHANT_PAYER_ID => '',
 			self::FULL_NAME => $name,
-			self::BIRTH_DATE => $payerBirthDate,
+			//self::BIRTH_DATE => $payerBirthDate,
 			self::DNI_NUMBER => $payerTaxVat,
 			self::CONTACT_PHONE => preg_replace('/\D/', '', $payerFone),
 			self::BILLING_ADDRESS => [

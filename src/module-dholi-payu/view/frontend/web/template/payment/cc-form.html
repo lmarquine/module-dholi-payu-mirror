@@ -13,9 +13,7 @@
 			<!-- ko template: getTemplate() --><!-- /ko -->
 			<!--/ko-->
 		</div>
-		<!-- ko foreach: getRegion('messages') -->
-		<!-- ko template: getTemplate() --><!-- /ko -->
-		<!--/ko-->
+
 		<form class="form" method="POST" data-bind="attr: {id: getCode() + '-form'}">
 			<fieldset class="fieldset payment method" data-bind="attr: {id: 'payment_form_' + getCode()}">
 				<input type="hidden"
@@ -167,24 +165,6 @@
 													'data-validate': JSON.stringify({'required':true})}"/>
 					</div>
 				</div>
-				<div class="field holder-birth-date" data-bind="visible: isAnotherCreditCardHolder">
-					<label data-bind="attr: {for: getCode() + '_holder_birth_date'}" class="label">
-						<span data-bind="i18n: 'Holder Birth Date'"></span>
-					</label>
-					<div class="control">
-						<input type="tel"
-						       name="payment[cc_holder_birth_date]"
-						       class="input-text"
-						       data-mask="00/00/0000"
-						       placeholder="DD/MM/AAAA"
-						       data-bind="attr: {
-													autocomplete: off,
-													id: getCode() + '_holder_birth_date',
-													title: $t('Holder Birth Date'),
-													'data-container': getCode() + '-birth-date',
-													'data-validate': JSON.stringify({'required':true})}"/>
-					</div>
-				</div>
 
 				<p class="message message-error error" data-bind="visible: paymentErrors()">
 					<!-- ko i18n: paymentErrors() --><!-- /ko -->
@@ -194,6 +174,9 @@
 		</form>
 
 		<div class="checkout-agreements-block">
+			<!-- ko foreach: getRegion('messages') -->
+				<!-- ko template: getTemplate() --><!-- /ko -->
+			<!--/ko-->
 			<!-- ko foreach: $parent.getRegion('before-place-order') -->
 				<!-- ko template: getTemplate() --><!-- /ko -->
 			<!--/ko-->
