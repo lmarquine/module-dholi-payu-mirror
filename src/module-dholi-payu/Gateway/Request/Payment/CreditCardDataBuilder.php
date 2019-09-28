@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Dholi\PayU\Gateway\Request\Payment;
 
 use Dholi\PayU\Gateway\PayU\Enumeration\PaymentMethod;
-use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
@@ -40,10 +39,7 @@ class CreditCardDataBuilder implements BuilderInterface {
 
 	const USER_AGENT = 'userAgent';
 
-	protected $encryptor;
-
-	public function __construct(EncryptorInterface $encryptor) {
-		$this->encryptor = $encryptor;
+	public function __construct() {
 	}
 
 	/**
@@ -59,8 +55,8 @@ class CreditCardDataBuilder implements BuilderInterface {
 		/**
 		 * Credit Card
 		 */
-		$creditCardNumber = $this->encryptor->decrypt($payment->getAdditionalInformation('creditCardNumber'));
-		$creditCardCvv = $this->encryptor->decrypt($payment->getAdditionalInformation('creditCardCvv'));
+		$creditCardNumber = preg_replace('/[\-\s]+/', '', $payment->getCcNumber());
+		$creditCardCvv = $payment->getCcCid();
 		$creditCardExp = $payment->getCcExpYear() . '/' . $payment->getCcExpMonth();
 
 		return [AuthorizeDataBuilder::TRANSACTION => [

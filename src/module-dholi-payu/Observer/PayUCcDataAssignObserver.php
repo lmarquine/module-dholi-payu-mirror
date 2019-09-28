@@ -69,12 +69,9 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 				PaymentMethodInterface::CC_CID_ENC => $requestData->getCcCvv(),
 				PaymentMethodInterface::CC_TYPE => $requestData->getCcType(),
 				PaymentMethodInterface::CC_OWNER => $requestData->getCcOwner(),
-				PaymentMethodInterface::CC_LAST_4 => substr($requestData->getCcNumber(), -4)
+				PaymentMethodInterface::CC_LAST_4 => substr($ccNumber, -4)
 			]
 		);
-		$paymentInfo->setAdditionalInformation('creditCardNumber', $this->encryptor->encrypt($ccNumber));
-		$paymentInfo->setAdditionalInformation('creditCardCvv', $this->encryptor->encrypt($requestData->getCcCvv()));
-
 		if ($requestData->getCcExpiry() && $requestData->getCcExpiry() != '') {
 			$expiry = explode("/", trim($requestData->getCcExpiry()));
 			$month = trim($expiry[0]);

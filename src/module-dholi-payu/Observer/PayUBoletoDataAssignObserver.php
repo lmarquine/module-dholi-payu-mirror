@@ -63,8 +63,8 @@ class PayUBoletoDataAssignObserver extends AbstractDataAssignObserver {
 				PaymentMethodInterface::CC_EXP_YEAR => null
 			]
 		);
-		$paymentInfo->setAdditionalInformation('creditCardNumber', null);
-		$paymentInfo->setAdditionalInformation('creditCardCvv', null);
+		//$paymentInfo->setAdditionalInformation('creditCardNumber', null);
+		//$paymentInfo->setAdditionalInformation('creditCardCvv', null);
 		$paymentInfo->setAdditionalInformation('installments', null);
 		$paymentInfo->setAdditionalInformation('installmentAmount', null);
 		$paymentInfo->setAdditionalInformation('creditCardHolderAnother', null);
