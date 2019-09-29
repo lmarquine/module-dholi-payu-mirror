@@ -1,7 +1,7 @@
 <?php
 /**
 * 
-* PayU para Magento
+* PayU para Magento 2
 * 
 * @category     Dholi
 * @package      Modulo PayU
