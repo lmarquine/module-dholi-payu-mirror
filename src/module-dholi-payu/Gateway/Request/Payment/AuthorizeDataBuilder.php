@@ -117,8 +117,11 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		$order = $paymentDataObject->getPayment()->getOrder();
 
 		$storeId = $order->getStoreId();
-		$shippingAddress = $paymentDataObject->getOrder()->getShippingAddress();
 		$billingAddress = $paymentDataObject->getOrder()->getBillingAddress();
+		$shippingAddress = $paymentDataObject->getOrder()->getShippingAddress();
+		if (!$shippingAddress) {
+			$shippingAddress = $billingAddress;
+		}
 
 		$total = $order->getBaseGrandTotal();
 		if ($this->config->isReceiptByAntecipacao($storeId)) {
@@ -139,7 +142,8 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		 * Buyer
 		 */
 		$name = trim($shippingAddress->getFirstname()) . ' ' . trim($shippingAddress->getLastname());
-		$taxvat = preg_replace('/\D/', '', $order->getCustomerTaxvat());
+		$taxvat = ($order->getCustomerTaxvat() ? $order->getCustomerTaxvat() : $order->getBillingAddress()->getVatId());
+		$taxvat = preg_replace('/\D/', '', $taxvat);
 		$buyer = [
 			//self::MERCHANT_BUYER_ID => '',
 			self::FULL_NAME => substr($name, 0, 150),
@@ -188,11 +192,11 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		$payerTaxVat = null;
 		$payerFone = null;
 		if ($payment->getAdditionalInformation('creditCardHolderAnother') && $payment->getAdditionalInformation('creditCardHolderAnother') == 1) {
-			$payerTaxVat = $payment->getAdditionalInformation('creditCardHolderCpf');
+			$payerTaxVat = preg_replace('/\D/', '', $payment->getAdditionalInformation('creditCardHolderCpf'));
 			$payerFone = $payment->getAdditionalInformation('creditCardHolderPhone');
 			//$payerBirthDate = $payment->getAdditionalInformation('creditCardHolderBirthDate');
 		} else {
-			$payerTaxVat = $order->getCustomerTaxvat();
+			$payerTaxVat = $taxvat;
 			$payerFone = $billingAddress->getTelephone();
 			//$payerBirthDate = $order->getCustomerDob();
 		}
