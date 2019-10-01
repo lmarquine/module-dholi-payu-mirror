@@ -16,7 +16,7 @@ $isCc = $block->isCc();
 
 		<?php if($isBoleto):?>
 			<dd><?php echo __('Bar Code'); ?></dd>
-			<dt><?php echo $block->getBoletoBarcode(); ?></dt>
+			<dt class="barcode"><?php echo $block->getBoletoBarcode(); ?></dt>
 
 			<dd><?php echo __('Boleto Link'); ?></dd>
 			<dt class="link">
