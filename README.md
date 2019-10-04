@@ -3,7 +3,7 @@
 A PayU é uma solução completa em pagamentos online, presente em quatro continentes. A PayU oferece serviços financeiros para compradores e vendedores pela internet.
 
 ### Página do Projeto
-Consule a [página do projeto PayU](https://www.dholi.dev/payu) para mais detalhes.
+Consule a [página do projeto PayU](https://www.dholi.dev/projetos/payu) para mais detalhes.
 
 ### Base de Ajuda
 Consule a [base de ajuda](https://docs.dholi.dev/payu) para mais detalhes.
