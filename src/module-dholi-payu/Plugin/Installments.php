@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Plugin;
 
-use Dholi\PayU\Gateway\Config\Config;
 use Dholi\PayU\Gateway\Config\Cc\Config as CcConfig;
+use Dholi\PayU\Gateway\Config\Config;
 use Dholi\PayU\Services\Payment\Pricing;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\ObjectManager;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Installments {
 
@@ -64,7 +64,7 @@ class Installments {
 		$pricingFees = [];
 		$math = ObjectManager::getInstance()->get(\Dholi\PayU\Plugin\Math::class);
 
-		while($j <= $totalInstallments) {
+		while ($j <= $totalInstallments) {
 			$paymentMode = null;
 			$installmentAmout = 0;
 
@@ -75,19 +75,21 @@ class Installments {
 			}
 			$totalValue = round($installmentAmout * $j, 2);
 
-			$pricingFees[] = array('installments' => strval($j),
-				'pricing' => array('payerDetail' => array('commission' => 0, 'interest' => ($j <= $installmentsWithoutInterest ? 0 : $interest), 'total' => $amount),
-					'merchantDetail' => array('commission' => 0, 'interest' => 0, 'total' => 0),
+			$pricingFees[] = ['installments' => strval($j),
+				'pricing' => ['payerDetail' => ['commission' => 0,
+					'interest' => ($j <= $installmentsWithoutInterest ? 0 : $interest),
+					'total' => $amount],
+					'merchantDetail' => ['commission' => 0, 'interest' => 0, 'total' => 0],
 					'totalValue' => $totalValue,
-					'totalIncomeTransaction' => $totalValue));
-
+					'totalIncomeTransaction' => $totalValue]
+			];
 			$j++;
 		}
 
-		$pricing = array('amount' => array('value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => 'BRL'),
-			'convertedAmount' => array('value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => 'BRL'),
-			'paymentMethodFee' => array(array('paymentMethod' => $paymentMethod, 'pricingFees' => $pricingFees))
-		);
+		$pricing = ['amount' => ['value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => 'BRL'],
+			'convertedAmount' => ['value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => 'BRL'],
+			'paymentMethodFee' => [['paymentMethod' => $paymentMethod, 'pricingFees' => $pricingFees]]
+		];
 
 		return json_encode($pricing, JSON_UNESCAPED_SLASHES);
 	}
