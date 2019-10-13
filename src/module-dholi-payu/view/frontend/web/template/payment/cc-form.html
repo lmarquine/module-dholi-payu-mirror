@@ -38,7 +38,7 @@
 								             value: creditCardNumber,
 								             valueUpdate: 'keyup',
 														 event: {blur: creditCardNumberBlurEvent()}"/>
-						<span class="card-brand-icon show"><span data-bind="attr: {class: creditCardBrand}"></span></span>
+						<span class="card-brand-icon" data-bind="attr: {visible: isShowCreditCardBrandIcon()}"><span data-bind="style: {'background-image': 'url(\'' + creditCardBrandIcon() + '\')'}"></span></span>
 					</div>
 				</div>
 				<div class="field date required" data-bind="attr: {id: getCode() + '_expiry'}">

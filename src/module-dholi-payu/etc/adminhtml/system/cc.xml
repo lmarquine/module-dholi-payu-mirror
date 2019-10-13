@@ -12,6 +12,12 @@
 			<validate>required-entry</validate>
 			<config_path>payment/dholi_payments_payu_cc/title</config_path>
 		</field>
+		<field id="icon" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+			<label>Icon</label>
+			<source_model>Dholi\Payment\Block\Adminhtml\Config\Source\CreditCardIcons</source_model>
+			<config_path>payment/dholi_payments_payu_cc/icon</config_path>
+			<comment><![CDATA[A tela de pagamento não tem regras de css aplicadas. Consulte o <a href="https://docs.dholi.dev/payu/customizacao" target="_blank">link</a> para saber como aplicar regras de css.]]></comment>
+		</field>
 		<field id="discount" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Discount first installment</label>
 			<validate>required-entry</validate>

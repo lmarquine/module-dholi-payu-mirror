@@ -21,6 +21,8 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 
 	const KEY_ACTIVE = 'active';
 
+	const ICON = 'icon';
+
 	/**
 	 * Total de Parcelas
 	 */
@@ -68,14 +70,16 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 		$this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()->get(Json::class);
 	}
 
-	/**
-	 * Gets Payment configuration status.
-	 *
-	 * @param int|null $storeId
-	 * @return bool
-	 */
 	public function isActive($storeId = null) {
 		return (bool)$this->getValue(self::KEY_ACTIVE, $storeId);
+	}
+
+	public function isShowIcon($storeId = null) {
+		return (bool)($this->getIconType($storeId) != 'none');
+	}
+
+	public function getIconType($storeId = null) {
+		return $this->getValue(self::ICON, $storeId);
 	}
 
 	public function getCcDiscount($storeId = null) {
