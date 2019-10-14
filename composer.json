@@ -2,7 +2,7 @@
   "name": "dholi/module-dholi-payu",
   "type": "magento2-component",
   "description": "Integração PayU para Magento 2",
-  "version": "dev-master",
+  "version": "1.0.0",
   "homepage": "https://www.dholi.dev/projetos/payu",
   "keywords": [
     "magento",
@@ -20,7 +20,7 @@
   "require": {
     "php": "~7.2",
     "magento/framework": ">=102.0.2",
-    "dholi/module-dholi-platform": "dev-master"
+    "dholi/module-dholi-platform": "1.0.0"
   },
   "license": [
     "OSL-3.0",
