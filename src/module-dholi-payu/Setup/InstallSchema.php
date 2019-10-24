@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.1
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -14,19 +14,14 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Setup;
 
+use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
-use Magento\Framework\DB\Ddl\Table;
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
 
 class InstallSchema implements InstallSchemaInterface {
-	/**
-	 * Function install
-	 * @param SchemaSetupInterface $setup
-	 * @param ModuleContextInterface $context
-	 * @return void
-	 */
+
 	public function install(SchemaSetupInterface $setup, ModuleContextInterface $context) {
 		$setup->startSetup();
 		$connection = $setup->getConnection();

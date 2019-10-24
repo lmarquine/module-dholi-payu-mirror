@@ -91,22 +91,6 @@
 				    </div>
 					</div>
 				</div>
-				<div class="field installment required" data-bind="visible: installments().length > 1">
-					<label data-bind="attr: {for: getCode() + '_installments'}" class="label">
-						<span data-bind="i18n: 'Payment option'"></span>
-					</label>
-					<div class="control">
-						<select  name="payment[cc_installments]"
-						         data-bind="attr: {id: getCode() + '_installments',
-															 'data-container': getCode() + '-installments',
-															 'data-validate': JSON.stringify({'required':true})},
-															  options: installments,
-															  optionsText: 't',
-															  optionsValue: 'v',
-																event: {change: reloadTotals}">
-						</select>
-					</div>
-				</div>
 				<div class="field name required">
 					<label data-bind="attr: {for: getCode() + '_owner'}" class="label">
 						<span data-bind="i18n: 'Card Holder Name'"></span>
@@ -121,6 +105,22 @@
 												title: $t('Card Holder Name'),
 												'data-container': getCode() + '_owner',
 												'data-validate': JSON.stringify({'required':true})}"/>
+					</div>
+				</div>
+				<div class="field installment required" data-bind="visible: installments().length > 1">
+					<label data-bind="attr: {for: getCode() + '_installments'}" class="label">
+						<span data-bind="i18n: 'Payment option'"></span>
+					</label>
+					<div class="control">
+						<select  name="payment[cc_installments]"
+						         data-bind="attr: {id: getCode() + '_installments',
+															 'data-container': getCode() + '-installments',
+															 'data-validate': JSON.stringify({'required':true})},
+															  options: installments,
+															  optionsText: 't',
+															  optionsValue: 'v',
+																event: {change: reloadTotals}">
+						</select>
 					</div>
 				</div>
 				<div class="field holder">

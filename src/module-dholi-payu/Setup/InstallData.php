@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.1
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -19,13 +19,7 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 class InstallData implements InstallDataInterface {
-	/**
-	 * Function install
-	 * @param ModuleDataSetupInterface $setup
-	 * @param ModuleContextInterface $context
-	 * @return void
-	 */
+
 	public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context) {
-		//install data here
 	}
 }

@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.1
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -49,12 +49,6 @@ class Builder {
 		return self::$data['aplication'];
 	}
 
-	/**
-	 *
-	 * @param $resource
-	 * @param $environment
-	 * @return string
-	 */
 	public static function getUrl($resource, $environment): string {
 		if (!isset(self::$instance)) {
 			self::getInstance();
@@ -63,11 +57,6 @@ class Builder {
 		return sprintf("%s://%s", self::$path['protocol'], self::$path[$resource]['environment'][$environment]);
 	}
 
-	/**
-	 *
-	 * @param $environment
-	 * @return string
-	 */
 	public static function getApiUrl($environment): string {
 		if (!isset(self::$instance)) {
 			self::getInstance();

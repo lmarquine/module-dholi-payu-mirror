@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.1
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -25,14 +25,6 @@ class Pricing {
 		$this->connection = $connection;
 	}
 
-	/**
-	 * @param $environment
-	 * @param $paymentMethod
-	 * @param $amount
-	 * @param $accountId
-	 * @param $apiKey
-	 * @param $publicKey
-	 */
 	public function doPricing($environment, $paymentMethod, $amount, $accountId, $apiKey, $publicKey) {
 		$date = gmdate("D, d M Y H:i:s", time()) . " GMT";
 		$contentToSign = utf8_encode('GET' . "\n" . "\n" . "\n" . $date . "\n" . '/payments-api/rest/v4.3/pricing');
