@@ -35,8 +35,5 @@
   },
   "scripts": {
     "pre-install-cmd": "Dholi\\PayU\\Installer::preInstall"
-  },
-  "replace": {
-
   }
 }
