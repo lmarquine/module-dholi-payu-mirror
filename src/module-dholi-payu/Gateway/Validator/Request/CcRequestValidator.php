@@ -37,7 +37,7 @@ class CcRequestValidator extends \Magento\Payment\Gateway\Validator\AbstractVali
 		$quote = $this->checkoutSession->getQuote();
 		$taxvat = ($quote->getCustomerTaxvat() ? $quote->getCustomerTaxvat() : $quote->getBillingAddress()->getVatId());
 		$taxvat = preg_replace('/\D/', '', $taxvat);
-		if (!empty($taxvat)) {
+		if (empty($taxvat)) {
 			$isValid = false;
 			array_push($fails, __('Taxvat is required'));
 		}

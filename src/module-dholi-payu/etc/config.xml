@@ -29,7 +29,7 @@
 				<can_details>1</can_details>
 				<payment_action>initialize</payment_action>
 				<currency>BRL</currency>
-				<min_installment>9.00</min_installment>
+				<min_installment>12.00</min_installment>
 				<total_installmens>12</total_installmens>
 				<installmens_without_interest>3</installmens_without_interest>
 				<discount>0</discount>
