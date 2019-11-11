@@ -17,27 +17,12 @@ namespace Dholi\PayU\Block\Cc;
 use Magento\Framework\Phrase;
 use Magento\Payment\Block\ConfigurableInfo;
 
-/**
- * Class Info
- */
 class Info extends ConfigurableInfo {
 
-	/**
-	 * Returns label
-	 *
-	 * @param string $field
-	 * @return Phrase
-	 */
 	protected function getLabel($field) {
 		return __($field);
 	}
 
-	/**
-	 * Prepare credit card related payment info
-	 *
-	 * @param Varien_Object|array $transport
-	 * @return Varien_Object
-	 */
 	protected function _prepareSpecificInformation($transport = null) {
 		if (null !== $this->_paymentSpecificInformation) {
 			return $this->_paymentSpecificInformation;

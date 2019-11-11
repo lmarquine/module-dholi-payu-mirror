@@ -59,11 +59,9 @@ class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 		$this->setCode(self::CODE);
 	}
 
-	public function collect(
-		\Magento\Quote\Model\Quote $quote,
-		\Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
-		\Magento\Quote\Model\Quote\Address\Total $total
-	) {
+	public function collect(\Magento\Quote\Model\Quote $quote,
+	                        \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
+	                        \Magento\Quote\Model\Quote\Address\Total $total) {
 		parent::collect($quote, $shippingAssignment, $total);
 
 		$items = $shippingAssignment->getItems();

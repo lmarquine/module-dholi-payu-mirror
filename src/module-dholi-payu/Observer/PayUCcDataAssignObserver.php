@@ -44,10 +44,6 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 		$this->httpHeader = $httpHeader;
 	}
 
-	/**
-	 * @param Observer $observer
-	 * @return void
-	 */
 	public function execute(Observer $observer) {
 		$data = $this->readDataArgument($observer);
 
@@ -85,9 +81,6 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 			]);
 		}
 
-		/**
-		 * Additional info
-		 */
 		if ($requestData->getCcInstallments()) {
 			$arrayex = explode('-', $requestData->getCcInstallments());
 			if (isset($arrayex[0])) {
@@ -97,7 +90,7 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 		}
 		if ($requestData->getCcHolderAnother() && $requestData->getCcHolderAnother() == 1) {
 			$paymentInfo->setAdditionalInformation('creditCardHolderAnother', 1);
-			$paymentInfo->setAdditionalInformation('creditCardHolderCpf', $requestData->getCcHolderCpf());
+			$paymentInfo->setAdditionalInformation('creditCardHolderDninumber', $requestData->getCcHolderDninumber());
 			$paymentInfo->setAdditionalInformation('creditCardHolderPhone', $requestData->getCcHolderPhone());
 			$paymentInfo->setAdditionalInformation('creditCardHolderBirthDate', $requestData->getCcHolderBirthDate());
 		}

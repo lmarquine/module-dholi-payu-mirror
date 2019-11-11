@@ -40,10 +40,6 @@ class PayUBoletoDataAssignObserver extends AbstractDataAssignObserver {
 		$this->httpHeader = $httpHeader;
 	}
 
-	/**
-	 * @param Observer $observer
-	 * @return void
-	 */
 	public function execute(Observer $observer) {
 		$paymentInfo = $this->readPaymentModelArgument($observer);
 		$paymentInfo->setAdditionalInformation('sessionId', $this->cookieManager->getCookie('PHPSESSID'));
@@ -63,12 +59,10 @@ class PayUBoletoDataAssignObserver extends AbstractDataAssignObserver {
 				PaymentMethodInterface::CC_EXP_YEAR => null
 			]
 		);
-		//$paymentInfo->setAdditionalInformation('creditCardNumber', null);
-		//$paymentInfo->setAdditionalInformation('creditCardCvv', null);
 		$paymentInfo->setAdditionalInformation('installments', null);
 		$paymentInfo->setAdditionalInformation('installmentAmount', null);
 		$paymentInfo->setAdditionalInformation('creditCardHolderAnother', null);
-		$paymentInfo->setAdditionalInformation('creditCardHolderCpf', null);
+		$paymentInfo->setAdditionalInformation('creditCardHolderDninumber', null);
 		$paymentInfo->setAdditionalInformation('creditCardHolderPhone', null);
 		$paymentInfo->setAdditionalInformation('creditCardHolderBirthDate', null);
 	}

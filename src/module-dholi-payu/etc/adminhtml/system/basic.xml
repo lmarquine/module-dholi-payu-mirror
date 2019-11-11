@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
-	<group id="dholi_payments_payu" translate="label" type="text" sortOrder="1010" showInDefault="1" showInWebsite="1" showInStore="1">
+	<group id="dholi_payments_payu" translate="label" type="text" sortOrder="1010" showInDefault="1" showInWebsite="1" showInStore="0">
 		<label>PayU - General Settings</label>
-		<field id="allowspecific" translate="label" type="allowspecific" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
-			<label>Payment from Applicable Countries</label>
-			<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
-			<config_path>payment/dholi_payments_payu/allowspecific</config_path>
-		</field>
-		<field id="specificcountry" translate="label" type="multiselect" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="0">
-			<label>Payment from Specific Countries</label>
-			<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
-			<config_path>payment/dholi_payments_payu/specificcountry</config_path>
-			<can_be_empty>1</can_be_empty>
-		</field>
 		<field id="environment" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Environment</label>
 			<source_model>Dholi\Payment\Block\Adminhtml\Config\Source\Environment</source_model>

@@ -130,21 +130,21 @@
 					       data-bind="attr: {'id': getCode() + '_holder'}, checked: isAnotherCreditCardHolder"/>
 					<label data-bind="attr: {'for': getCode() + '_holder'}" class="label"><span data-bind="i18n: 'Holder Another'"></span></label>
 				</div>
-				<div class="field holder-cpf" data-bind="visible: isAnotherCreditCardHolder">
-					<label data-bind="attr: {for: getCode() + '_holder_cpf'}" class="label">
-						<span data-bind="i18n: 'Holder CPF'"></span>
+				<div class="field holder-dninumber" data-bind="visible: isAnotherCreditCardHolder">
+					<label data-bind="attr: {for: getCode() + '_holder_dninumber'}" class="label">
+						<span data-bind="i18n: 'Holder dniNumber'"></span>
 					</label>
 					<div class="control">
 						<input type="tel"
-						       name="payment[cc_holder_cpf]"
+						       name="payment[cc_holder_dninumber]"
 						       class="input-text"
-						       data-mask="000.000.000-00"
 						       data-bind="attr: {
 													autocomplete: off,
-													id: getCode() + '_holder_cpf',
-													title: $t('Holder CPF'),
-													'data-container': getCode() + '-holder_cpf',
-													'data-validate': JSON.stringify({'required':true})}"/>
+													id: getCode() + '_holder_dninumber',
+													title: $t('Holder dniNumber'),
+													'data-container': getCode() + '-holder_dninumber',
+													'data-validate': JSON.stringify({'required':true}),
+													'data-mask': getDniNumberMask()}"/>
 					</div>
 				</div>
 				<div class="field holder-phone" data-bind="visible: isAnotherCreditCardHolder">
@@ -155,14 +155,14 @@
 						<input type="tel"
 						       name="payment[cc_holder_phone]"
 						       class="input-text"
-						       data-mask="(00) 90000-0000"
 						       data-mask-optional="true"
 						       data-bind="attr: {
 													autocomplete: off,
 													id: getCode() + '_holder_phone',
 													title: $t('Holder Phone'),
 													'data-container': getCode() + '-holder-phone',
-													'data-validate': JSON.stringify({'required':true})}"/>
+													'data-validate': JSON.stringify({'required':true}),
+													'data-mask': getPhoneMask()}"/>
 					</div>
 				</div>
 

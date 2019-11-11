@@ -17,19 +17,10 @@ namespace Dholi\PayU\Block\Cc;
 use Dholi\PayU\Gateway\Config\Cc\Config;
 use Magento\Payment\Helper\Data;
 
-/**
- * Class Form
- */
 class Form extends \Magento\Payment\Block\Form {
 
-	/**
-	 * @var Config
-	 */
 	protected $gatewayConfig;
 
-	/**
-	 * @var Data
-	 */
 	private $paymentDataHelper;
 
 	public function __construct(Config $gatewayConfig,

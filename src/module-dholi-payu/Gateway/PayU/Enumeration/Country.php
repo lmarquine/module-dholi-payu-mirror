@@ -22,16 +22,10 @@ class Country extends AbstractMultiton {
 		return $this->code;
 	}
 
-	/**
-	 * @return mixed
-	 */
 	public function getCurrency() {
 		return $this->currency;
 	}
 
-	/**
-	 * @return mixed
-	 */
 	public function getLanguage() {
 		return $this->language;
 	}
@@ -39,8 +33,10 @@ class Country extends AbstractMultiton {
 	protected static function initializeMembers() {
 		new static('ARS', 'AR', 'ARS', 'es');
 		new static('BRL', 'BR', 'BRL', 'pt');
+		new static('CLP', 'CL', 'CLP', 'es');
 		new static('COP', 'CO', 'COP', 'es');
 		new static('MXN', 'MX', 'MXN', 'es');
+		new static('PAB', 'PA', 'PAB', 'es');
 		new static('PEN', 'PE', 'PEN', 'es');
 	}
 

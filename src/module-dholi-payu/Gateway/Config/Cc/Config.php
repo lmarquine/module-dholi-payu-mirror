@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Gateway\Config\Cc;
 
+use Dholi\PayU\Gateway\PayU\Enumeration\Mask;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 
@@ -23,45 +24,21 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 
 	const ICON = 'icon';
 
-	/**
-	 * Total de Parcelas
-	 */
 	const KEY_CC_TOTAL_INSTALLMENTS = 'total_installmens';
 
-	/**
-	 * Parcelas sem Juros
-	 */
 	const KEY_CC_INSTALLMENTS_WITHOU_INTEREST = 'installmens_without_interest';
 
-	/**
-	 * Juros
-	 */
 	const KEY_CC_INTEREST = 'interest';
 
-	/**
-	 * Desconto à Vista
-	 */
 	const KEY_CC_DISCOUNT = 'discount';
 
-	/**
-	 * Parcela Mínima
-	 */
 	const KEY_CC_MIN_INSTALLMENT = 'min_installment';
-
-	const ORDER_STATUS = 'order_status';
 
 	/**
 	 * @var \Magento\Framework\Serialize\Serializer\Json
 	 */
 	private $serializer;
 
-	/**
-	 *
-	 * @param ScopeConfigInterface $scopeConfig
-	 * @param null|string $methodCode
-	 * @param string $pathPattern
-	 * @param Json|null $serializer
-	 */
 	public function __construct(ScopeConfigInterface $scopeConfig,
 	                            $methodCode = null,
 	                            $pathPattern = self::DEFAULT_PATH_PATTERN,
@@ -114,5 +91,13 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 			return str_replace(',', '.', $value);
 		}
 		return $value;
+	}
+
+	public function getDniNumberMask($currency) {
+		return Mask::memberByKey($currency)->getDniMask();
+	}
+
+	public function getPhoneMask($currency) {
+		return Mask::memberByKey($currency)->getFoneMask();
 	}
 }

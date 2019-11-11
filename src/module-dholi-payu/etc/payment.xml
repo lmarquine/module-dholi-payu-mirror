@@ -7,5 +7,8 @@
 		<group id="dholi_payments_payu_boleto">
 			<label>Dholi - PayU Boleto</label>
 		</group>
+		<group id="dholi_payments_payu_baloto">
+			<label>Dholi - PayU Baloto</label>
+		</group>
 	</groups>
 </payment>

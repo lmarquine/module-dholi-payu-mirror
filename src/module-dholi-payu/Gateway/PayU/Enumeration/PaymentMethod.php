@@ -23,13 +23,27 @@ class PaymentMethod extends AbstractMultiton {
 	}
 
 	protected static function initializeMembers() {
-		new static('boleto', 'BOLETO_BANCARIO');
+		/**
+		 * LATAM
+		 */
 		new static('visa', 'VISA');
 		new static('elo', 'ELO');
 		new static('hipercard', 'HIPERCARD');
 		new static('mastercard', 'MASTERCARD');
 		new static('amex', 'AMEX');
 		new static('dinersclub', 'DINERS');
+
+		/**
+		 * BR
+		 */
+		new static('boleto', 'BOLETO_BANCARIO');
+
+		/**
+		 * CO
+		 */
+		new static('baloto', 'BALOTO');
+		new static('efecty', 'EFECTY');
+		new static('sured', 'SURED');
 	}
 
 	protected function __construct($key, $code) {

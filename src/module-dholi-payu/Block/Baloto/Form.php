@@ -12,9 +12,9 @@
 */
 declare(strict_types=1);
 
-namespace Dholi\PayU\Block\Boleto;
+namespace Dholi\PayU\Block\Baloto;
 
-use Dholi\PayU\Gateway\Config\Boleto\Config;
+use Dholi\PayU\Gateway\Config\Baloto\Config;
 use Magento\Payment\Helper\Data;
 
 class Form extends \Magento\Payment\Block\Form {

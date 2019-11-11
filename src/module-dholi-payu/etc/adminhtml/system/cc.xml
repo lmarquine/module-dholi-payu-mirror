@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
-	<group id="dholi_payments_payu_cc" translate="label" type="text" sortOrder="1012" showInDefault="1" showInWebsite="1" showInStore="1">
+	<group id="dholi_payments_payu_cc" translate="label" type="text" sortOrder="1011" showInDefault="1" showInWebsite="1" showInStore="1">
 		<label>PayU - Credit Card Settings</label>
-		<field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+		<field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Enabled</label>
 			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 			<config_path>payment/dholi_payments_payu_cc/active</config_path>
@@ -12,18 +12,29 @@
 			<validate>required-entry</validate>
 			<config_path>payment/dholi_payments_payu_cc/title</config_path>
 		</field>
-		<field id="icon" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+		<field id="allowspecific" translate="label" type="allowspecific" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
+			<label>Payment from Applicable Countries</label>
+			<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+			<config_path>payment/dholi_payments_payu_cc/allowspecific</config_path>
+		</field>
+		<field id="specificcountry" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+			<label>Payment from Specific Countries</label>
+			<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+			<config_path>payment/dholi_payments_payu_cc/specificcountry</config_path>
+			<can_be_empty>1</can_be_empty>
+		</field>
+		<field id="icon" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Icon</label>
 			<source_model>Dholi\Payment\Block\Adminhtml\Config\Source\CreditCardIcons</source_model>
 			<config_path>payment/dholi_payments_payu_cc/icon</config_path>
 			<comment><![CDATA[A tela de pagamento não tem regras de css aplicadas. Consulte o <a href="https://docs.dholi.dev/payu/customizacao" target="_blank">link</a> para saber como aplicar regras de css.]]></comment>
 		</field>
-		<field id="discount" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+		<field id="discount" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Discount first installment</label>
 			<validate>required-entry</validate>
 			<config_path>payment/dholi_payments_payu_cc/discount</config_path>
 		</field>
-		<field id="interest" translate="label tooltip" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+		<field id="interest" translate="label tooltip" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Interest a.m.</label>
 			<validate>required-entry</validate>
 			<config_path>payment/dholi_payments_payu_cc/interest</config_path>

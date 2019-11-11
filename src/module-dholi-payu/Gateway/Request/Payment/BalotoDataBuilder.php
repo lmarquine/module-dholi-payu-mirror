@@ -19,7 +19,7 @@ use Dholi\PayU\Gateway\PayU\Enumeration\PaymentMethod;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 
-class BoletoDataBuilder implements BuilderInterface {
+class BalotoDataBuilder implements BuilderInterface {
 
 	const COOKIE = 'cookie';
 
@@ -43,7 +43,7 @@ class BoletoDataBuilder implements BuilderInterface {
 		$expiration = new \DateTime('now +' . $this->config->getExpiration($storeId) . ' day');
 
 		return [AuthorizeDataBuilder::TRANSACTION => [
-			self::PAYMENT_METHOD => PaymentMethod::memberByKey('boleto')->getCode(),
+			self::PAYMENT_METHOD => PaymentMethod::memberByKey('baloto')->getCode(),
 			self::COOKIE => $payment->getAdditionalInformation('sessionId'),
 			self::USER_AGENT => $payment->getAdditionalInformation('userAgent'),
 			self::EXPIRATION_DATE => $expiration->format('Y-m-d\TH:i:s'),

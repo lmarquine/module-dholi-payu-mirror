@@ -54,6 +54,7 @@ class ConfigProvider implements ConfigProviderInterface {
 
 	public function getConfig() {
 		$storeId = $this->session->getStoreId();
+		$currency = $this->config->getStoreCurrency($storeId);
 
 		$brands = [];
 		$showIcon = $this->ccConfig->isShowIcon($storeId);
@@ -88,6 +89,10 @@ class ConfigProvider implements ConfigProviderInterface {
 					'icons' => [
 						'show' => $showIcon,
 						'brands' => $brands
+					],
+					'mask' => [
+						'dniNumber' => $this->ccConfig->getDniNumberMask($currency),
+						'phone' => $this->ccConfig->getPhoneMask($currency)
 					]
 				]
 			],

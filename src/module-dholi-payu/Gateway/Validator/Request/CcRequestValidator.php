@@ -15,28 +15,32 @@ declare(strict_types=1);
 namespace Dholi\PayU\Gateway\Validator\Request;
 
 use Magento\Framework\Exception\NotFoundException;
-use Magento\Payment\Gateway\ConfigInterface;
+use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Validator\ResultInterface;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
-use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Checkout\Model\Session;
 
 class CcRequestValidator extends \Magento\Payment\Gateway\Validator\AbstractValidator {
 
-	private $config;
+	protected $checkoutSession;
 
-	protected $logger;
+	public function __construct(ResultInterfaceFactory $resultFactory, Session $checkoutSession) {
+		$this->checkoutSession = $checkoutSession;
 
-	public function __construct(ResultInterfaceFactory $resultFactory,
-	                            ConfigInterface $config,
-	                            \Psr\Log\LoggerInterface $logger) {
-		$this->config = $config;
-		$this->logger = $logger;
 		parent::__construct($resultFactory);
 	}
 
 	public function validate(array $validationSubject): ResultInterface {
 		$isValid = true;
 		$fails = array();
+
+		$quote = $this->checkoutSession->getQuote();
+		$taxvat = ($quote->getCustomerTaxvat() ? $quote->getCustomerTaxvat() : $quote->getBillingAddress()->getVatId());
+		$taxvat = preg_replace('/\D/', '', $taxvat);
+		if (!empty($taxvat)) {
+			$isValid = false;
+			array_push($fails, __('Taxvat is required'));
+		}
 
 		$info = $validationSubject['payment'];
 		$ccNumber = $info->getCcNumber();

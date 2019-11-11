@@ -12,7 +12,7 @@
 */
 declare(strict_types=1);
 
-namespace Dholi\PayU\Block\Boleto;
+namespace Dholi\PayU\Block\Baloto;
 
 use Magento\Framework\Phrase;
 use Magento\Payment\Block\ConfigurableInfo;
@@ -49,11 +49,11 @@ class Info extends ConfigurableInfo {
 		}
 		$paymentLink = $info->getAdditionalInformation('paymentLink');
 		if (!empty($paymentLink)) {
-			$data[(string)__('Boleto Link')] = $paymentLink;
+			$data[(string)__('Baloto Link')] = $paymentLink;
 		}
 		$pdfLink = $info->getAdditionalInformation('pdfLink');
 		if (!empty($pdfLink)) {
-			$data[(string)__('Boleto PDF')] = $pdfLink;
+			$data[(string)__('Baloto PDF')] = $pdfLink;
 		}
 		$responseErrors = $info->getAdditionalInformation('responseErrors');
 		if (!empty($responseErrors)) {

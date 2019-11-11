@@ -170,7 +170,7 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		$result[self::ORDER] = [
 			self::ACCOUNT_ID => $this->config->getAccountId($storeId),
 			self::REFERENCE_CODE => $order->getIncrementId(),
-			self::DESCRIPTION => sprintf("Pedido %s", $order->getIncrementId()),
+			self::DESCRIPTION => sprintf(__("Order %s"), $order->getIncrementId()),
 			self::LANGUAGE => $currencyEnum->getLanguage(),
 			self::NOTIFY_URL => $this->urlBuilder->getUrl('dholipayu/payment/notification', ['_secure' => true]),
 			self::APPLICATION_ID => Builder::getInstance()->getApplicationId(),
@@ -192,7 +192,7 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		$payerTaxVat = null;
 		$payerFone = null;
 		if ($payment->getAdditionalInformation('creditCardHolderAnother') && $payment->getAdditionalInformation('creditCardHolderAnother') == 1) {
-			$payerTaxVat = preg_replace('/\D/', '', $payment->getAdditionalInformation('creditCardHolderCpf'));
+			$payerTaxVat = preg_replace('/\D/', '', $payment->getAdditionalInformation('creditCardHolderDninumber'));
 			$payerFone = $payment->getAdditionalInformation('creditCardHolderPhone');
 			//$payerBirthDate = $payment->getAdditionalInformation('creditCardHolderBirthDate');
 		} else {

@@ -22,10 +22,6 @@ use Dholi\PayU\Plugin\Installments as InstallmentsPlugin;
 use Psr\Log\LoggerInterface;
 use Dholi\Core\Enumeration\HttpStatus;
 
-/**
- * Class Index
- * @package Dholi\PayU\Controller\Index\Installments
- */
 class Installments extends Action {
 
 
@@ -46,10 +42,6 @@ class Installments extends Action {
 		return parent::__construct($context);
 	}
 
-	/**
-	 * Function execute
-	 * @return \Magento\Framework\View\Result\Page
-	 */
 	public function execute() {
 		$result = $this->resultJsonFactory->create();
 		$response = ['code' => HttpStatus::OK()->getCode()];
@@ -79,12 +71,6 @@ class Installments extends Action {
 		return $result->setData($response);
 	}
 
-	/**
-	 * Get one page checkout model
-	 *
-	 * @return \Magento\Checkout\Model\Type\Onepage
-	 * @codeCoverageIgnore
-	 */
 	public function getOnepage() {
 		return $this->_objectManager->get(\Magento\Checkout\Model\Type\Onepage::class);
 	}

@@ -27,30 +27,18 @@ use Psr\Log\LoggerInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\App\ObjectManager;
 
-/**
- * Class Index
- * @package Dholi\PayU\Controller
- */
 class Index extends Action {
 
 	protected $resultPageFactory;
 
 	private $logger;
 
-	/**
-	 * @var OrderPaymentRepositoryInterface
-	 */
 	private $orderPaymentRepository;
 
 	private $orderRepository;
 
 	private $connectionPool;
 
-	/**
-	 * Index constructor.
-	 * @param Context $context
-	 * @param JsonFactory $resultJsonFactory
-	 */
 	public function __construct(Context $context,
 	                            PageFactory $resultPageFactory,
 	                            LoggerInterface $logger,
@@ -67,10 +55,6 @@ class Index extends Action {
 		$this->connectionPool = $connectionPool ?: ObjectManager::getInstance()->get(ResourceConnection::class);
 	}
 
-	/**
-	 * Function execute
-	 * @return Page
-	 */
 	public function execute() {
 		try {
 			$salesConnection = $this->connectionPool->getConnection('sales');

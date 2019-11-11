@@ -63,10 +63,13 @@
 																<item name="dholi_payments_payu" xsi:type="array">
 																	<item name="component" xsi:type="string">Dholi_PayU/js/view/payment/dholi-methods</item>
 																	<item name="methods" xsi:type="array">
+																		<item name="dholi_payments_payu_cc" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
 																		<item name="dholi_payments_payu_boleto" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
-																		<item name="dholi_payments_payu_cc" xsi:type="array">
+																		<item name="dholi_payments_payu_baloto" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
 																	</item>

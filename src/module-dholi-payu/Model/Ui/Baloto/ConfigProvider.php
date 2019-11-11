@@ -12,15 +12,15 @@
 */
 declare(strict_types=1);
 
-namespace Dholi\PayU\Model\Ui\Boleto;
+namespace Dholi\PayU\Model\Ui\Baloto;
 
-use Dholi\PayU\Gateway\Config\Boleto\Config as BoletoConfig;
+use Dholi\PayU\Gateway\Config\Baloto\Config as BalotoConfig;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 
 class ConfigProvider implements ConfigProviderInterface {
 
-	const CODE = 'dholi_payments_payu_boleto';
+	const CODE = 'dholi_payments_payu_baloto';
 
 	private $config;
 
@@ -30,10 +30,10 @@ class ConfigProvider implements ConfigProviderInterface {
 
 	public function __construct(SessionManagerInterface $session,
 	                            \Magento\Framework\Escaper $escaper,
-	                            BoletoConfig $boletoConfig) {
+	                            BalotoConfig $balotoConfig) {
 		$this->session = $session;
 		$this->escaper = $escaper;
-		$this->config = $boletoConfig;
+		$this->config = $balotoConfig;
 	}
 
 	public function getConfig() {
