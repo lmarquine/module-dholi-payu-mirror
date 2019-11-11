@@ -19,7 +19,7 @@
   "require": {
     "php": "~7.2",
     "magento/framework": ">=102.0.2",
-    "dholi/module-dholi-platform": "~1.0.1"
+    "dholi/module-dholi-platform": "dev-master"
   },
   "license": [
     "OSL-3.0",
