@@ -153,12 +153,12 @@ class Additional extends \Magento\Framework\View\Element\Template {
 
 	public function getFormattedInstallmentAmount() {
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+		$priceCurrency = $objectManager->create('Magento\Framework\Pricing\PriceCurrencyInterface');
 
 		$installmentAmount = $this->getPayment()->getAdditionalInformation('installmentAmount');
 		$installments = $this->getPayment()->getAdditionalInformation('installments');
 
-		return __("In %1x of %2", $installments, $priceHelper->currency($installmentAmount, true, false));
+		return __("In %1x of %2", $installments, $priceCurrency->format($installmentAmount, false));
 	}
 
 }

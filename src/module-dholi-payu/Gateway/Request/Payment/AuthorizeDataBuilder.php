@@ -123,10 +123,10 @@ class AuthorizeDataBuilder implements BuilderInterface {
 			$shippingAddress = $billingAddress;
 		}
 
-		$total = $order->getBaseGrandTotal();
+		$total = $order->getGrandTotal();
 		if ($this->config->isReceiptByAntecipacao($storeId)) {
-			if ($order->getPayuBaseInterestAmount()) {
-				$total -= $order->getPayuBaseInterestAmount();
+			if ($order->getPayuInterestAmount()) {
+				$total -= $order->getPayuInterestAmount();
 			}
 		}
 		$total = number_format($total, 2, '.', '');

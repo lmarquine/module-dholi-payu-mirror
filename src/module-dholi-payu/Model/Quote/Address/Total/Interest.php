@@ -18,42 +18,23 @@ use Dholi\PayU\Api\Data\PaymentMethodInterface;
 use Dholi\PayU\Plugin\Interest as InterestPlugin;
 use Magento\Directory\Helper\Data as DirectoryData;
 use Magento\Framework\App\ObjectManager;
-use Magento\Quote\Model\QuoteValidator;
-use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
 class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 
 	const CODE = 'dholi_interest';
 
-	/**
-	 * @var LoggerInterface
-	 */
 	private $logger;
 
-	/**
-	 * @var QuoteValidator
-	 */
-	protected $quoteValidator;
-
-	/**
-	 * @var InterestPlugin
-	 */
 	private $interestPlugin;
-
-	private $storeManager;
 
 	private $directoryData;
 
 	public function __construct(LoggerInterface $logger,
-	                            QuoteValidator $quoteValidator,
 	                            InterestPlugin $interestPlugin,
-	                            StoreManagerInterface $storeManager,
 	                            DirectoryData $data) {
 		$this->logger = $logger;
-		$this->quoteValidator = $quoteValidator;
 		$this->interestPlugin = $interestPlugin;
-		$this->storeManager = $storeManager;
 		$this->directoryData = $data;
 
 		$this->setCode(self::CODE);
@@ -71,7 +52,7 @@ class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 		$applyMode = $this->interestPlugin->canApply($quote);
 
 		if ($applyMode->isApplyByRequest()) {
-			$baseCurrencyCode = $this->storeManager->getStore()->getCurrentCurrency()->getCode();
+			$baseCurrencyCode = $quote->getBaseCurrencyCode();
 			$paymentInterest = $this->interestPlugin->getInterest($quote, $baseCurrencyCode);
 
 			$shippingAmount = $paymentInterest->getShippingAmount();
@@ -84,14 +65,14 @@ class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 
 			$totalInterestAmount = $this->directoryData->currencyConvert($baseTotalInterestAmount, $paymentInterest->baseCurrencyCode);
 
-			$total->setPayuInterestAmount($totalInterestAmount);
 			$total->setPayuBaseInterestAmount($baseTotalInterestAmount);
+			$total->setPayuInterestAmount($totalInterestAmount);
 
 			$total->setGrandTotal($total->getGrandTotal() + $total->getPayuInterestAmount());
 			$total->setBaseGrandTotal($total->getBaseGrandTotal() + $total->getPayuBaseInterestAmount());
 		} else if ($applyMode->isNotApply()) {
-			$total->setPayuInterestAmount(0);
 			$total->setPayuBaseInterestAmount(0);
+			$total->setPayuInterestAmount(0);
 		}
 
 		return $this;
@@ -113,19 +94,6 @@ class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 		$total->setBaseSubtotalInclTax(0);
 	}
 
-	/**
-	 * @param \Magento\Quote\Model\Quote $quote
-	 * @param Address\Total $total
-	 * @return array|null
-	 */
-	/**
-	 * Assign subtotal amount and label to address object
-	 *
-	 * @param \Magento\Quote\Model\Quote $quote
-	 * @param Address\Total $total
-	 * @return array
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
 	public function fetch(\Magento\Quote\Model\Quote $quote, \Magento\Quote\Model\Quote\Address\Total $total) {
 		return [
 			'code' => $this->getCode(),
@@ -134,11 +102,6 @@ class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 		];
 	}
 
-	/**
-	 * Get Subtotal label
-	 *
-	 * @return \Magento\Framework\Phrase
-	 */
 	public function getLabel() {
 		return __('Interest');
 	}

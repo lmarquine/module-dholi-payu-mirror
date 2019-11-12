@@ -24,12 +24,12 @@
 
 # -- H
 "Holder Another","La tarjeta pertenece a otra persona"
-"Holder dniNumber","Número de IVA"
-"Holder Phone","Teléfono"
+"Holder dniNumber","Cédula de Ciudadanía"
+"Holder Phone","Teléfono/Móvil"
 
 # -- I
-"Interest","Juros"
-"Installments","Interés"
+"Interest","Interés"
+"Installments","Cuotas"
 "In %1x of %2","En %1x de %2"
 
 # -- L
@@ -47,6 +47,7 @@
 "Pay %1","Pagar %1"
 "Payment from applicable countries","Pago para Países Seleccionados"
 "Payment from Specific countries","Pago para Países Específicos"
+"Payment option","Cuotas de pago"
 "Public Key","Clave Pública"
 "Pay With","Pagado con"
 "PayU Order ID","Ordene en PayU"
@@ -68,7 +69,7 @@
 "Transaction.State.PENDING","Su compra está pendiente de pago."
 "Transaction.State.SUBMITTED","Transacción enviada a la entidad financiera y por alguna razón no terminó el procesamiento."
 "Transaction.State.CANCELLED","Su compra ha sido rechazada."
-"Taxvat is required","El campo Documento de contacto no está presente o no está lleno."
+"Taxvat is required","El campo Cédula de Ciudadanía no está presente o no está lleno."
 
 # -- Y
 "Your payment was processed by PayU", "Su transacción fue procesada con éxito por PayU."
@@ -112,6 +113,6 @@
 "ERROR_FIXING_AND_REVERSING", "Clínica de transacciones: Código de operación interno. Solo aplicable a la API de consulta".
 "ERROR_FIXING_INCOMPLETE_DATA", "Clínica de transacciones: Código de operación interno. Solo aplicable a la API de consulta".
 "DECLINED_TEST_MODE_NOT_ALLOWED","Esta cuenta no está autorizada para transacción de prueba."
-"Parameter [payerDNI] is required.","Se requiere Documento de contacto. Verifique la información de su cuenta para obtener la información correcta de Documento de contacto."
+"Parameter [payerDNI] is required.","Se requiere Cédula de Ciudadanía. Verifique la información de su cuenta para obtener la información correcta de Documento de Cédula de Ciudadanía."
 "The credit card expiration date is not valid","La fecha de vencimiento de la tarjeta de crédito no es válida."
 "ERROR","Hubo un error al procesar su transacción. Vuelva a intentarlo o elija otro método de pago."

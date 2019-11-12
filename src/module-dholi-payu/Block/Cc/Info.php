@@ -63,8 +63,8 @@ class Info extends ConfigurableInfo {
 
 	private function getFormattedInstallmentAmount($installmentAmount) {
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+		$priceCurrency = $objectManager->create('Magento\Framework\Pricing\PriceCurrencyInterface');
 
-		return $priceHelper->currency($installmentAmount, true, false);
+		return $priceCurrency->format($installmentAmount, false);
 	}
 }

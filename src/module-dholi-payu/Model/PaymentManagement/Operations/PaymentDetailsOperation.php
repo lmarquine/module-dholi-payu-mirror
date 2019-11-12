@@ -28,7 +28,7 @@ class PaymentDetailsOperation {
 	public function details(OrderPaymentInterface $payment) {
 		$order = $payment->getOrder();
 
-		$arguments = ['payment' => $payment, 'amount' => $order->getBaseGrandTotal()];
+		$arguments = ['payment' => $payment, 'amount' => $order->getGrandTotal()];
 
 		if ($payment instanceof InfoInterface) {
 			$arguments['payment'] = $this->paymentDataObjectFactory->create($arguments['payment']);

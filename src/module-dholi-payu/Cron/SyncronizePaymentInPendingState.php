@@ -69,7 +69,7 @@ class SyncronizePaymentInPendingState {
 			foreach ($paymentList as $payment) {
 				try {
 					$salesConnection->beginTransaction();
-					$processor->syncronize($payment, false, $payment->getOrder()->getBaseGrandTotal());
+					$processor->syncronize($payment, false, $payment->getOrder()->getGrandTotal());
 					$salesConnection->commit();
 				} catch (\Exception $e) {
 					$this->logger->critical($e->getMessage());

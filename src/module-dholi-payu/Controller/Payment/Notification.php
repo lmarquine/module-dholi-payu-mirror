@@ -63,7 +63,7 @@ class Notification extends Action implements CsrfAwareActionInterface {
 					$salesConnection->beginTransaction();
 
 					$processor = ObjectManager::getInstance()->get(Processor::class);
-					$processor->syncronize($order->getPayment(), false, $order->getBaseGrandTotal());
+					$processor->syncronize($order->getPayment(), false, $order->getGrandTotal());
 
 					$salesConnection->commit();
 				}

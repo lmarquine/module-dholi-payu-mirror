@@ -62,7 +62,7 @@ class Index extends Action {
 			$order = $this->orderRepository->get(144);
 
 			$processor = ObjectManager::getInstance()->get(\Dholi\PayU\Model\PaymentManagement\Processor::class);
-			$processor->syncronize($order->getPayment(), false, $order->getBaseGrandTotal());
+			$processor->syncronize($order->getPayment(), false, $order->getGrandTotal());
 
 			$salesConnection->commit();
 		} catch (\Exception $e) {

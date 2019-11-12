@@ -30,7 +30,7 @@ class Mask extends AbstractMultiton {
 		new static('ARS', '', '(0099) 90000-0000');
 		new static('BRL', '000.000.000-00', '(00) 90000-0000');
 		new static('CLP', '', '');
-		new static('COP', '', '(0) 000-0000');
+		new static('COP', '000000999999', '(0) 000-0000');
 		new static('MXN', '', '');
 		new static('PAB', '', '');
 		new static('PEN', '', '');

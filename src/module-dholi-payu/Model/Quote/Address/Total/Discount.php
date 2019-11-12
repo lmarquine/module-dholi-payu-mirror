@@ -14,49 +14,30 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Model\Quote\Address\Total;
 
-use Magento\Quote\Model\QuoteValidator;
-use Magento\Store\Model\StoreManagerInterface;
+use Dholi\PayU\Api\Data\PaymentMethodInterface;
 use Dholi\PayU\Plugin\Discount as DiscountPlugin;
 use Dholi\PayU\Plugin\Math;
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
-use Psr\Log\LoggerInterface;
 use Magento\Directory\Helper\Data as DirectoryData;
+use Psr\Log\LoggerInterface;
 
 class Discount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 
 	const CODE = 'dholi_vista';
 
-	/**
-	 * @var LoggerInterface
-	 */
 	private $logger;
 
-	/**
-	 * @var QuoteValidator
-	 */
-	protected $quoteValidator;
-
-	/**
-	 * @var DiscountPlugin
-	 */
 	private $discountPlugin;
-
-	private $storeManager;
 
 	private $math;
 
 	private $directoryData;
 
 	public function __construct(LoggerInterface $logger,
-	                            QuoteValidator $quoteValidator,
 	                            DiscountPlugin $discountPlugin,
-	                            StoreManagerInterface $storeManager,
 	                            Math $math,
 	                            DirectoryData $data) {
 		$this->logger = $logger;
-		$this->quoteValidator = $quoteValidator;
 		$this->discountPlugin = $discountPlugin;
-		$this->storeManager = $storeManager;
 		$this->math = $math;
 		$this->directoryData = $data;
 
@@ -75,24 +56,37 @@ class Discount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 
 		$applyMode = $this->discountPlugin->canApply($quote);
 		if ($applyMode->isApplyByRequest()) {
-			$baseCurrencyCode = $this->storeManager->getStore()->getCurrentCurrency()->getCode();
+			$baseCurrencyCode = $quote->getBaseCurrencyCode();
+
 			$paymentDiscount = $this->discountPlugin->getDiscount($quote, $baseCurrencyCode);
 
 			$baseTotalDiscountAmount = (($paymentDiscount->baseSubtotalWithDiscount + $paymentDiscount->baseTax) * $paymentDiscount->totalPercent) / 100;
 			$baseTotalDiscountAmount = round($baseTotalDiscountAmount, 2);
 			$totalDiscountAmount = $this->directoryData->currencyConvert($baseTotalDiscountAmount, $paymentDiscount->baseCurrencyCode);
 
+			$total->setPayuBaseDiscountAmount(-$baseTotalDiscountAmount);
 			$total->setPayuDiscountAmount(-$totalDiscountAmount);
-			$total->setPayuDiscountAmount(-$baseTotalDiscountAmount);
 
 			$total->setGrandTotal($total->getGrandTotal() + $total->getPayuDiscountAmount());
 			$total->setBaseGrandTotal($total->getBaseGrandTotal() + $total->getPayuBaseDiscountAmount());
 		} else if ($applyMode->isNotApply()) {
-			$total->setPayuDiscountAmount(0);
+			$total->setPayuBaseDiscountAmount(0);
 			$total->setPayuDiscountAmount(0);
 		}
 
 		return $this;
+	}
+
+	public function fetch(\Magento\Quote\Model\Quote $quote, \Magento\Quote\Model\Quote\Address\Total $total) {
+		return [
+			'code' => $this->getCode(),
+			'title' => $this->getLabel(),
+			'value' => $total->getPayuDiscountAmount()
+		];
+	}
+
+	public function getLabel() {
+		return __('Discount first installment');
 	}
 
 	protected function clearValues(Address\Total $total) {
@@ -109,35 +103,5 @@ class Discount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 		$total->setBaseTotalAmount('shipping_discount_tax_compensation', 0);
 		$total->setSubtotalInclTax(0);
 		$total->setBaseSubtotalInclTax(0);
-	}
-
-	/**
-	 * @param \Magento\Quote\Model\Quote $quote
-	 * @param Address\Total $total
-	 * @return array|null
-	 */
-	/**
-	 * Assign subtotal amount and label to address object
-	 *
-	 * @param \Magento\Quote\Model\Quote $quote
-	 * @param Address\Total $total
-	 * @return array
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	public function fetch(\Magento\Quote\Model\Quote $quote, \Magento\Quote\Model\Quote\Address\Total $total) {
-		return [
-			'code' => $this->getCode(),
-			'title' => $this->getLabel(),
-			'value' => $total->getPayuDiscountAmount()
-		];
-	}
-
-	/**
-	 * Get Subtotal label
-	 *
-	 * @return \Magento\Framework\Phrase
-	 */
-	public function getLabel() {
-		return __('Discount first installment');
 	}
 }
