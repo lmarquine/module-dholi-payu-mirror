@@ -17,8 +17,8 @@ namespace Dholi\PayU\Plugin;
 use Dholi\PayU\Gateway\Config\Cc\Config as CcConfig;
 use Dholi\PayU\Gateway\Config\Config;
 use Dholi\PayU\Services\Payment\Pricing;
+use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ObjectManager;
-use Magento\Store\Model\StoreManagerInterface;
 
 class Installments {
 
@@ -28,31 +28,31 @@ class Installments {
 
 	private $pricing;
 
-	private $storeManager;
+	private $checkoutSession;
 
 	public function __construct(Config $config,
 	                            CcConfig $ccConfig,
 	                            Pricing $pricing,
-	                            StoreManagerInterface $storeManager) {
+	                            Session $checkoutSession) {
 		$this->config = $config;
 		$this->ccConfig = $ccConfig;
 		$this->pricing = $pricing;
-		$this->storeManager = $storeManager;
+		$this->checkoutSession = $checkoutSession;
 	}
 
 	public function byAntecipacao($paymentMethod, $amount) {
-		$storeId = $this->storeManager->getStore()->getId();
+		$storeId = $this->checkoutSession->getQuote()->getStoreId();
 		$environment = $this->config->getEnvironment($storeId);
 		$accountId = $this->config->getAccountId($storeId);
 		$apiKey = $this->config->getApiKey($storeId);
 		$publicKey = $this->config->getPublicKey($storeId);
+		$currencyCode = $this->checkoutSession->getQuote()->getQuoteCurrencyCode();
 
-		return $this->pricing->doPricing($environment, $paymentMethod, $amount, $accountId, $apiKey, $publicKey);
+		return $this->pricing->doPricing($environment, $paymentMethod, $amount, $accountId, $apiKey, $publicKey, $currencyCode);
 	}
 
 	public function byFluxo($paymentMethod, $amount) {
-		$storeId = $this->storeManager->getStore()->getId();
-
+		$storeId = $this->checkoutSession->getQuote()->getStoreId();
 		$interest = $this->ccConfig->getCcInterest($storeId);
 		$interest = floatval($interest);
 
@@ -63,6 +63,7 @@ class Installments {
 
 		$pricingFees = [];
 		$math = ObjectManager::getInstance()->get(\Dholi\PayU\Plugin\Math::class);
+		$currencyCode = $this->checkoutSession->getQuote()->getQuoteCurrencyCode();
 
 		while ($j <= $totalInstallments) {
 			$paymentMode = null;
@@ -86,8 +87,8 @@ class Installments {
 			$j++;
 		}
 
-		$pricing = ['amount' => ['value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => 'BRL'],
-			'convertedAmount' => ['value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => 'BRL'],
+		$pricing = ['amount' => ['value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => $currencyCode],
+			'convertedAmount' => ['value' => $amount, 'tax' => 0, 'purchaseValue' => $amount, 'currency' => $currencyCode],
 			'paymentMethodFee' => [['paymentMethod' => $paymentMethod, 'pricingFees' => $pricingFees]]
 		];
 

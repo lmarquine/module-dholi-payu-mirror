@@ -25,13 +25,13 @@ class Pricing {
 		$this->connection = $connection;
 	}
 
-	public function doPricing($environment, $paymentMethod, $amount, $accountId, $apiKey, $publicKey) {
+	public function doPricing($environment, $paymentMethod, $amount, $accountId, $apiKey, $publicKey, $currencyCode) {
 		$date = gmdate("D, d M Y H:i:s", time()) . " GMT";
 		$contentToSign = utf8_encode('GET' . "\n" . "\n" . "\n" . $date . "\n" . '/payments-api/rest/v4.3/pricing');
 		$signature = base64_encode(hash_hmac('sha256', $contentToSign, $apiKey, true));
 
 		$data = ['accountId' => $accountId,
-			'currency' => 'BRL',
+			'currency' => $currencyCode,
 			'amount' => $amount,
 			'paymentMethod' => $paymentMethod];
 
