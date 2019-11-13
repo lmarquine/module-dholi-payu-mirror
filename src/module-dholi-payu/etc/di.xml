@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+	<type name="Magento\Payment\Model\Checks\SpecificationFactory">
+		<arguments>
+			<argument name="mapping" xsi:type="array">
+				<item name="total" xsi:type="object">Dholi\PayU\Model\Checks\TotalMinMax</item>
+			</argument>
+		</arguments>
+	</type>
+
 	<!-- Configuration reader -->
 	<type name="Dholi\PayU\Gateway\Config\Config">
 		<arguments>
@@ -20,6 +28,11 @@
 	<type name="Dholi\PayU\Gateway\Config\Baloto\Config">
 		<arguments>
 			<argument name="methodCode" xsi:type="const">Dholi\PayU\Model\Ui\Baloto\ConfigProvider::CODE</argument>
+		</arguments>
+	</type>
+	<type name="Dholi\PayU\Gateway\Config\Efecty\Config">
+		<arguments>
+			<argument name="methodCode" xsi:type="const">Dholi\PayU\Model\Ui\Efecty\ConfigProvider::CODE</argument>
 		</arguments>
 	</type>
 
@@ -65,6 +78,17 @@
 			<argument name="commandPool" xsi:type="object">DholiPayUBalotoCommandPool</argument>
 		</arguments>
 	</virtualType>
+
+	<virtualType name="DholiPayUPaymentEfectyFacade" type="Magento\Payment\Model\Method\Adapter">
+		<arguments>
+			<argument name="code" xsi:type="const">Dholi\PayU\Model\Ui\Efecty\ConfigProvider::CODE</argument>
+			<argument name="formBlockType" xsi:type="string">Dholi\PayU\Block\Efecty\Form</argument>
+			<argument name="infoBlockType" xsi:type="string">Dholi\PayU\Block\Efecty\Info</argument>
+			<argument name="validatorPool" xsi:type="object">DholiPayUEfectyValidatorPool</argument>
+			<argument name="valueHandlerPool" xsi:type="object">DholiPayUEfectyValueHandlerPool</argument>
+			<argument name="commandPool" xsi:type="object">DholiPayUEfectyCommandPool</argument>
+		</arguments>
+	</virtualType>
 	<!-- END Payment Method Facade configuration -->
 
 	<!-- Commands infrastructure -->
@@ -79,7 +103,6 @@
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBoletoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
 		<arguments>
 			<argument name="commands" xsi:type="array">
@@ -91,11 +114,21 @@
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBalotoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
 		<arguments>
 			<argument name="commands" xsi:type="array">
 				<item name="initialize" xsi:type="string">DholiPayUBalotoAuthorizeCommand</item>
+				<item name="capture" xsi:type="string">DholiPayUCaptureCommand</item>
+				<item name="cancel" xsi:type="string">DholiPayUVoidCommand</item>
+				<item name="void" xsi:type="string">DholiPayUVoidCommand</item>
+				<item name="details" xsi:type="string">DholiPayUOrderDetailCommand</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="DholiPayUEfectyCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+		<arguments>
+			<argument name="commands" xsi:type="array">
+				<item name="initialize" xsi:type="string">DholiPayUEfectyAuthorizeCommand</item>
 				<item name="capture" xsi:type="string">DholiPayUCaptureCommand</item>
 				<item name="cancel" xsi:type="string">DholiPayUVoidCommand</item>
 				<item name="void" xsi:type="string">DholiPayUVoidCommand</item>
@@ -147,6 +180,17 @@
 			<argument name="client" xsi:type="object">Dholi\PayU\Gateway\Http\Client\Payments</argument>
 			<argument name="validator" xsi:type="object">Dholi\PayU\Gateway\Validator\Response\ResponseValidator</argument>
 			<argument name="handler" xsi:type="object">DholiPayUBalotoAuthorizePaymentHandler</argument>
+			<argument name="errorMessageMapper" xsi:type="object">Dholi\PayU\Gateway\ErrorMapper\VirtualErrorMessageMapper</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="DholiPayUEfectyAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+		<arguments>
+			<argument name="requestBuilder" xsi:type="object">DholiPayUEfectyAuthorizeRequest</argument>
+			<argument name="transferFactory" xsi:type="object">DholiPayUPaymentsTransferFactory</argument>
+			<argument name="client" xsi:type="object">Dholi\PayU\Gateway\Http\Client\Payments</argument>
+			<argument name="validator" xsi:type="object">Dholi\PayU\Gateway\Validator\Response\ResponseValidator</argument>
+			<argument name="handler" xsi:type="object">DholiPayUEfectyAuthorizePaymentHandler</argument>
 			<argument name="errorMessageMapper" xsi:type="object">Dholi\PayU\Gateway\ErrorMapper\VirtualErrorMessageMapper</argument>
 		</arguments>
 	</virtualType>
@@ -233,6 +277,16 @@
 		</arguments>
 	</virtualType>
 
+	<virtualType name="DholiPayUEfectyAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+		<arguments>
+			<argument name="builders" xsi:type="array">
+				<item name="general" xsi:type="string">Dholi\PayU\Gateway\Request\Payment\GeneralDataBuilder</item>
+				<item name="transaction" xsi:type="string">Dholi\PayU\Gateway\Request\Payment\AuthorizeDataBuilder</item>
+				<item name="efecty" xsi:type="string">Dholi\PayU\Gateway\Request\Payment\EfectyDataBuilder</item>
+			</argument>
+		</arguments>
+	</virtualType>
+
 	<virtualType name="DholiPayUVoidRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
 		<arguments>
 			<argument name="builders" xsi:type="array">
@@ -249,23 +303,30 @@
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBoletoAuthorizePaymentHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
+				<!-- mesmo formato do boleto -->
 				<item name="payment_details" xsi:type="string">Dholi\PayU\Gateway\Response\Payment\BoletoAuthorisationDetailsHandler</item>
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBalotoAuthorizePaymentHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
-				<item name="payment_details" xsi:type="string">Dholi\PayU\Gateway\Response\Payment\BalotoAuthorisationDetailsHandler</item>
+				<!-- mesmo formato do boleto -->
+				<item name="payment_details" xsi:type="string">Dholi\PayU\Gateway\Response\Payment\BoletoAuthorisationDetailsHandler</item>
 			</argument>
 		</arguments>
 	</virtualType>
-
+	<virtualType name="DholiPayUEfectyAuthorizePaymentHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+		<arguments>
+			<argument name="handlers" xsi:type="array">
+				<!-- mesmo formato do boleto -->
+				<item name="payment_details" xsi:type="string">Dholi\PayU\Gateway\Response\Payment\BoletoAuthorisationDetailsHandler</item>
+			</argument>
+		</arguments>
+	</virtualType>
 	<virtualType name="DholiPayUCapturePaymentHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
@@ -316,7 +377,6 @@
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUCcValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
@@ -324,7 +384,6 @@
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBoletoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
@@ -332,7 +391,6 @@
 			</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBalotoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
@@ -340,30 +398,41 @@
 			</argument>
 		</arguments>
 	</virtualType>
+	<virtualType name="DholiPayUEfectyValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+		<arguments>
+			<argument name="handlers" xsi:type="array">
+				<item name="default" xsi:type="string">DholiPayUEfectyConfigValueHandler</item>
+			</argument>
+		</arguments>
+	</virtualType>
 
+	<!-- Value Handler -->
 	<virtualType name="DholiPayUConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
 		<arguments>
 			<argument name="configInterface" xsi:type="object">Dholi\PayU\Gateway\Config\Config</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUCcConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
 		<arguments>
 			<argument name="configInterface" xsi:type="object">Dholi\PayU\Gateway\Config\Cc\Config</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBoletoConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
 		<arguments>
 			<argument name="configInterface" xsi:type="object">Dholi\PayU\Gateway\Config\Boleto\Config</argument>
 		</arguments>
 	</virtualType>
-
 	<virtualType name="DholiPayUBalotoConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
 		<arguments>
 			<argument name="configInterface" xsi:type="object">Dholi\PayU\Gateway\Config\Baloto\Config</argument>
 		</arguments>
 	</virtualType>
+	<virtualType name="DholiPayUEfectyConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+		<arguments>
+			<argument name="configInterface" xsi:type="object">Dholi\PayU\Gateway\Config\Efecty\Config</argument>
+		</arguments>
+	</virtualType>
+	<!-- END  Value Handler -->
 
 	<!-- Validators infrastructure -->
 	<virtualType name="DholiPayUCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
@@ -372,12 +441,14 @@
 		</arguments>
 	</virtualType>
 
-	<virtualType name="DholiPayUCcValidator" type="Dholi\PayU\Gateway\Validator\Request\CcRequestValidator"/>
+	<virtualType name="DholiPayURequestValidator" type="Dholi\PayU\Gateway\Validator\Request\RequestValidator"/>
+
+	<virtualType name="DholiPayUCcRequestValidator" type="Dholi\PayU\Gateway\Validator\Request\CcRequestValidator"/>
 
 	<virtualType name="DholiPayUCcValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
 		<arguments>
 			<argument name="validators" xsi:type="array">
-				<item name="global" xsi:type="string">DholiPayUCcValidator</item>
+				<item name="global" xsi:type="string">DholiPayUCcRequestValidator</item>
 				<item name="country" xsi:type="string">DholiPayUCountryValidator</item>
 			</argument>
 		</arguments>
@@ -385,6 +456,7 @@
 	<virtualType name="DholiPayUBoletoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
 		<arguments>
 			<argument name="validators" xsi:type="array">
+				<item name="global" xsi:type="string">DholiPayURequestValidator</item>
 				<item name="country" xsi:type="string">DholiPayUCountryValidator</item>
 			</argument>
 		</arguments>
@@ -392,6 +464,15 @@
 	<virtualType name="DholiPayUBalotoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
 		<arguments>
 			<argument name="validators" xsi:type="array">
+				<item name="global" xsi:type="string">DholiPayURequestValidator</item>
+				<item name="country" xsi:type="string">DholiPayUCountryValidator</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="DholiPayUEfectyValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+		<arguments>
+			<argument name="validators" xsi:type="array">
+				<item name="global" xsi:type="string">DholiPayURequestValidator</item>
 				<item name="country" xsi:type="string">DholiPayUCountryValidator</item>
 			</argument>
 		</arguments>

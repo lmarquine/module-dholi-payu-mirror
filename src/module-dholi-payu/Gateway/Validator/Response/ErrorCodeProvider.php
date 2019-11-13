@@ -16,10 +16,19 @@ namespace Dholi\PayU\Gateway\Validator\Response;
 
 class ErrorCodeProvider {
 
+	private $dynamicErrors = ['INVALID_TRANSACTION'];
+
 	public function getErrorCodes($response): array {
 		$result = [];
 		if(isset($response->transactionResponse)) {
-			$result[] = $response->transactionResponse->responseCode;
+			$code = $response->transactionResponse->responseCode;
+			if(in_array($code, $this->dynamicErrors)) {
+				if(null !== $response->transactionResponse->responseMessage) {
+					$code = $response->transactionResponse->responseMessage;
+				}
+			}
+
+			$result[] = $code;
 		}
 
 		return $result;

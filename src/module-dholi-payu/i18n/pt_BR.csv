@@ -1,4 +1,5 @@
 # -- A
+"Applied over already converted value.","Aplicado sobre o valor convertido."
 
 # -- B
 "Bar Code","Código de barras"
@@ -44,6 +45,7 @@
 "PayU - Boleto Settings","PayU - Boleto Bancário (BR)"
 "PayU - Credit Card Settings","PayU - Cartão de Crédito (BR,CO)"
 "PayU - Baloto Settings","PayU - Baloto (CO)"
+"PayU - Efecty Settings","PayU - Efecty (CO)"
 "Pay %1","Pagar %1"
 "Payment from applicable countries","Pagamento para Países Selecionados"
 "Payment from Specific countries","Pagamento para Países Específicos"

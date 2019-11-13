@@ -23,6 +23,12 @@
 			<argument name="balotoConfig" xsi:type="object">Dholi\PayU\Gateway\Config\Baloto\Config</argument>
 		</arguments>
 	</type>
+	<type name="Dholi\PayU\Model\Ui\Efecty\ConfigProvider">
+		<arguments>
+			<argument name="config" xsi:type="object">Dholi\PayU\Gateway\Config\Config</argument>
+			<argument name="efectyConfig" xsi:type="object">Dholi\PayU\Gateway\Config\Efecty\Config</argument>
+		</arguments>
+	</type>
 
 	<type name="Magento\Checkout\Model\CompositeConfigProvider">
 		<arguments>
@@ -31,6 +37,7 @@
 				<item name="dholi_payments_payu_cc_config_provider" xsi:type="object">Dholi\PayU\Model\Ui\Cc\ConfigProvider</item>
 				<item name="dholi_payments_payu_boleto_config_provider" xsi:type="object">Dholi\PayU\Model\Ui\Boleto\ConfigProvider</item>
 				<item name="dholi_payments_payu_baloto_config_provider" xsi:type="object">Dholi\PayU\Model\Ui\Baloto\ConfigProvider</item>
+				<item name="dholi_payments_payu_efecty_config_provider" xsi:type="object">Dholi\PayU\Model\Ui\Efecty\ConfigProvider</item>
 			</argument>
 		</arguments>
 	</type>
