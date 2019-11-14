@@ -49,7 +49,7 @@ class Payments implements ClientInterface {
 		} catch (\Magento\Payment\Gateway\Http\ConverterException $e) {
 			throw $e;
 		} finally {
-			$this->logger->debug(var_export($log, true));
+			$this->logger->info(var_export($log, true));
 		}
 
 		return $result;

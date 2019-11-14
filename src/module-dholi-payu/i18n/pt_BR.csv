@@ -71,7 +71,7 @@
 "Transaction.State.PENDING","Sua compra está aguardando pagamento."
 "Transaction.State.SUBMITTED","Transação enviada para a entidade financeira e por algum motivo não terminou seu processamento."
 "Transaction.State.CANCELLED","Sua compra foi rejeitada."
-"Taxvat is required","O campo CPF/CNPJ não está presente ou não foi preenchido."
+"Taxvat is required","O campo CPF / CNPJ não está presente ou não foi preenchido."
 
 # -- Y
 "Your payment was processed by PayU","Sua solicitação foi processada com sucesso por PayU."
