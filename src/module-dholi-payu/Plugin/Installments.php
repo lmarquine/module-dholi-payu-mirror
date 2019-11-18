@@ -74,7 +74,7 @@ class Installments {
 			} else {
 				$installmentAmout = $math::calculatePayment($amount, $interest / 100, $j);
 			}
-			$totalValue = round($installmentAmout * $j, 2);
+			$totalValue = round($installmentAmout * $j, 7);
 
 			$pricingFees[] = ['installments' => strval($j),
 				'pricing' => ['payerDetail' => ['commission' => 0,
