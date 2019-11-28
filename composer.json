@@ -1,6 +1,6 @@
 {
   "name": "dholi/module-dholi-payu",
-  "type": "magento2-component",
+  "type": "magento2-module",
   "description": "Integração PayU para Magento 2",
   "homepage": "https://www.dholi.dev/projetos/payu",
   "keywords": [
