@@ -39,13 +39,19 @@ class ConfigProvider implements ConfigProviderInterface {
 	public function getConfig() {
 		$storeId = $this->session->getStoreId();
 
-		return [
-			'payment' => [
+		$payment = [];
+		$isActive = $this->config->isActive($storeId);
+		if ($isActive) {
+			$payment = [
 				self::CODE => [
-					'isActive' => $this->config->isActive($storeId),
+					'isActive' => $isActive,
 					'instructions' => $this->getInstructions($storeId)
 				]
-			]
+			];
+		}
+
+		return [
+			'payment' => $payment
 		];
 	}
 

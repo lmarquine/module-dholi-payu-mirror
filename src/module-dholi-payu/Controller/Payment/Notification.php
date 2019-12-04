@@ -49,16 +49,16 @@ class Notification extends Action implements CsrfAwareActionInterface {
 	}
 
 	public function execute() {
-		$data = $this->getRequest()->getParams();
-
+		$data = $this->getRequest()->getPostValue();
 		$response = HttpStatus::UNPROCESSABLE_ENTITY()->getCode();
 		try {
+			$this->logger->info(sprintf("%s - Recebendo notificação PayU [%s]", __METHOD__, json_encode($data)));
 
 			if ($data && isset($data['reference_sale']) && isset($data['state_pol'])) {
 				$order = $this->orderFactory->create()->loadByIncrementId($data['reference_sale']);
 
 				if ($order && $order->getId() && !$order->isCanceled()) {
-					$this->logger->info(sprintf("Processando notificação. Pedido [%s] - Status [%s].", $data['reference_sale'], $data['state_pol']));
+					$this->logger->info(sprintf("%s - Processando notificação PayU. Pedido [%s] - Status [%s].", __METHOD__, $data['reference_sale'], $data['state_pol']));
 					$salesConnection = $this->connectionPool->getConnection('sales');
 					$salesConnection->beginTransaction();
 
@@ -70,12 +70,13 @@ class Notification extends Action implements CsrfAwareActionInterface {
 				$response = HttpStatus::OK()->getCode();
 			}
 		} catch (CommandException $ce) {
-			$this->logger->critical($ce->getMessage());
-			$this->logger->critical($ce->getTraceAsString());
+			$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));
+			$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getTraceAsString()));
 			$salesConnection->rollBack();
 
 			$response = HttpStatus::INTERNAL_SERVER_ERROR()->getCode();
 		}
+		$this->logger->info(sprintf("%s - Notificação PayU processada. Pedido [%s] - HTTP Code Response [%s].", __METHOD__, $data['reference_sale'], $response));
 
 		$this->getResponse()->clearHeader('Content-Type')->setHeader('Content-Type', 'text/html')->setHttpResponseCode($response)->setBody($response);
 

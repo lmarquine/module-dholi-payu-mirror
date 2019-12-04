@@ -71,10 +71,12 @@ class ConfigProvider implements ConfigProviderInterface {
 			];
 		}
 
-		return [
-			'payment' => [
+		$payment = [];
+		$isActive = $this->ccConfig->isActive($storeId);
+		if($isActive) {
+			$payment = [
 				self::CODE => [
-					'isActive' => $this->ccConfig->isActive($storeId),
+					'isActive' => $isActive,
 					'accountId' => $this->config->getAccountId($storeId),
 					'publicKey' => $this->config->getPublicKey($storeId),
 					'receipt' => $this->config->getReceipt($storeId),
@@ -95,7 +97,11 @@ class ConfigProvider implements ConfigProviderInterface {
 						'phone' => $this->ccConfig->getPhoneMask($currency)
 					]
 				]
-			],
+			];
+		}
+
+		return [
+			'payment' => $payment
 		];
 	}
 }

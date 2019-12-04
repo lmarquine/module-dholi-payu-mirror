@@ -66,8 +66,8 @@ class Index extends Action {
 
 			$salesConnection->commit();
 		} catch (\Exception $e) {
-			$this->logger->critical($e->getMessage());
-			$this->logger->critical($e->getTraceAsString());
+			$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));
+			$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getTraceAsString()));
 			$salesConnection->rollBack();
 		}
 

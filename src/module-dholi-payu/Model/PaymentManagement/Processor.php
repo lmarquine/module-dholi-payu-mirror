@@ -39,8 +39,8 @@ class Processor {
 
 	public function syncronize(OrderPaymentInterface $payment, $isOnline, $amount): OrderPaymentInterface {
 		$payment = $this->paymentDetailsOperation->details($payment, $isOnline, $amount);
-
 		$payuOrderStatus = $payment->getPayuOrderStatus();
+
 		if ($payuOrderStatus->isCaptured()) {
 			$payment = $this->capturePayment($payment);
 		} elseif ($payuOrderStatus->isCancelled()) {

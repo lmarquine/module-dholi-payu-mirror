@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Model\Quote\Address\Total;
 
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Dholi\PayU\Plugin\Discount as DiscountPlugin;
 use Dholi\PayU\Plugin\Math;
 use Magento\Directory\Helper\Data as DirectoryData;
@@ -90,8 +90,8 @@ class Discount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 	}
 
 	protected function clearValues(Address\Total $total) {
-		$total->setTotalAmount(PaymentMethodInterface::PAYU_DISCOUNT_AMOUNT, 0);
-		$total->setBaseTotalAmount(PaymentMethodInterface::PAYU_BASE_DISCOUNT_AMOUNT, 0);
+		$total->setTotalAmount(OrderPaymentPayUInterface::PAYU_DISCOUNT_AMOUNT, 0);
+		$total->setBaseTotalAmount(OrderPaymentPayUInterface::PAYU_BASE_DISCOUNT_AMOUNT, 0);
 
 		$total->setTotalAmount('subtotal', 0);
 		$total->setBaseTotalAmount('subtotal', 0);

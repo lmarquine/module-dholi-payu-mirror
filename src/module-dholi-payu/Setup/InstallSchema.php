@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Setup;
 
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -30,9 +30,9 @@ class InstallSchema implements InstallSchemaInterface {
 		foreach ($tables as $t) {
 			$table = $setup->getTable($t);
 
-			if ($connection->tableColumnExists($table, PaymentMethodInterface::PAYU_DISCOUNT_AMOUNT) === false) {
+			if ($connection->tableColumnExists($table, OrderPaymentPayUInterface::PAYU_DISCOUNT_AMOUNT) === false) {
 				$connection->addColumn($table,
-					PaymentMethodInterface::PAYU_DISCOUNT_AMOUNT,
+					OrderPaymentPayUInterface::PAYU_DISCOUNT_AMOUNT,
 					[
 						'type' => \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
 						'length' => '20,4',
@@ -40,9 +40,9 @@ class InstallSchema implements InstallSchemaInterface {
 					]
 				);
 			}
-			if ($connection->tableColumnExists($table, PaymentMethodInterface::PAYU_BASE_DISCOUNT_AMOUNT) === false) {
+			if ($connection->tableColumnExists($table, OrderPaymentPayUInterface::PAYU_BASE_DISCOUNT_AMOUNT) === false) {
 				$connection->addColumn($table,
-					PaymentMethodInterface::PAYU_BASE_DISCOUNT_AMOUNT,
+					OrderPaymentPayUInterface::PAYU_BASE_DISCOUNT_AMOUNT,
 					[
 						'type' => \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
 						'length' => '20,4',
@@ -51,9 +51,9 @@ class InstallSchema implements InstallSchemaInterface {
 				);
 			}
 
-			if ($connection->tableColumnExists($table, PaymentMethodInterface::PAYU_INTEREST_AMOUNT) === false) {
+			if ($connection->tableColumnExists($table, OrderPaymentPayUInterface::PAYU_INTEREST_AMOUNT) === false) {
 				$connection->addColumn($table,
-					PaymentMethodInterface::PAYU_INTEREST_AMOUNT,
+					OrderPaymentPayUInterface::PAYU_INTEREST_AMOUNT,
 					[
 						'type' => \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
 						'length' => '20,4',
@@ -61,9 +61,9 @@ class InstallSchema implements InstallSchemaInterface {
 					]
 				);
 			}
-			if ($connection->tableColumnExists($table, PaymentMethodInterface::PAYU_BASE_INTEREST_AMOUNT) === false) {
+			if ($connection->tableColumnExists($table, OrderPaymentPayUInterface::PAYU_BASE_INTEREST_AMOUNT) === false) {
 				$connection->addColumn($table,
-					PaymentMethodInterface::PAYU_BASE_INTEREST_AMOUNT,
+					OrderPaymentPayUInterface::PAYU_BASE_INTEREST_AMOUNT,
 					[
 						'type' => \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
 						'length' => '20,4',
@@ -74,9 +74,9 @@ class InstallSchema implements InstallSchemaInterface {
 		}
 
 		$table = $setup->getTable('sales_order_payment');
-		if ($connection->tableColumnExists($table, PaymentMethodInterface::TRANSACTION_STATE) === false) {
+		if ($connection->tableColumnExists($table, OrderPaymentPayUInterface::TRANSACTION_STATE) === false) {
 			$connection->addColumn($table,
-				PaymentMethodInterface::TRANSACTION_STATE,
+				OrderPaymentPayUInterface::TRANSACTION_STATE,
 				[
 					'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
 					'length' => 30,

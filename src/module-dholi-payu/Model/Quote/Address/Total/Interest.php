@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Model\Quote\Address\Total;
 
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Dholi\PayU\Plugin\Interest as InterestPlugin;
 use Magento\Directory\Helper\Data as DirectoryData;
 use Magento\Framework\App\ObjectManager;
@@ -79,8 +79,8 @@ class Interest extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 	}
 
 	protected function clearValues(Address\Total $total) {
-		$total->setTotalAmount(PaymentMethodInterface::PAYU_INTEREST_AMOUNT, 0);
-		$total->setBaseTotalAmount(PaymentMethodInterface::PAYU_BASE_INTEREST_AMOUNT, 0);
+		$total->setTotalAmount(OrderPaymentPayUInterface::PAYU_INTEREST_AMOUNT, 0);
+		$total->setBaseTotalAmount(OrderPaymentPayUInterface::PAYU_BASE_INTEREST_AMOUNT, 0);
 
 		$total->setTotalAmount('subtotal', 0);
 		$total->setBaseTotalAmount('subtotal', 0);

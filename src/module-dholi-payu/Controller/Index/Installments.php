@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Dholi\PayU\Controller\Index;
 
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\App\Action\Action;
 use Dholi\PayU\Plugin\Installments as InstallmentsPlugin;

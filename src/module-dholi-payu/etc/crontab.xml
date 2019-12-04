@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
 	<group id="default">
+		<job name="dholi_payment_payu_order_in_new_state" instance="Dholi\PayU\Cron\SyncronizeOrderNewState" method="execute">
+			<schedule>* * * * *</schedule>
+		</job>
 		<job name="dholi_payment_payu_in_pending_state" instance="Dholi\PayU\Cron\SyncronizePaymentInPendingState" method="execute">
 			<schedule>0/30 * * * *</schedule>
 		</job>

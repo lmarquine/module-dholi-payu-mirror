@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Observer;
 
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\Event\Observer;
@@ -23,6 +23,7 @@ use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Psr\Log\LoggerInterface;
+use Magento\Sales\Api\Data\OrderPaymentInterface;
 
 class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 
@@ -61,11 +62,11 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 		$ccNumber = preg_replace('/[\-\s]+/', '', $requestData->getCcNumber());
 		$paymentInfo->addData(
 			[
-				PaymentMethodInterface::CC_NUMBER_ENC => $ccNumber,
-				PaymentMethodInterface::CC_CID_ENC => $requestData->getCcCvv(),
-				PaymentMethodInterface::CC_TYPE => $requestData->getCcType(),
-				PaymentMethodInterface::CC_OWNER => $requestData->getCcOwner(),
-				PaymentMethodInterface::CC_LAST_4 => substr($ccNumber, -4)
+				OrderPaymentPayUInterface::CC_NUMBER_ENC => $ccNumber,
+				OrderPaymentPayUInterface::CC_CID_ENC => $requestData->getCcCvv(),
+				OrderPaymentInterface::CC_TYPE => $requestData->getCcType(),
+				OrderPaymentInterface::CC_OWNER => $requestData->getCcOwner(),
+				OrderPaymentInterface::CC_LAST_4 => substr($ccNumber, -4)
 			]
 		);
 		if ($requestData->getCcExpiry() && $requestData->getCcExpiry() != '') {
@@ -76,8 +77,8 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 				$year = '20' . $year;
 			}
 			$paymentInfo->addData([
-				PaymentMethodInterface::CC_EXP_MONTH => $month,
-				PaymentMethodInterface::CC_EXP_YEAR => $year
+				OrderPaymentInterface::CC_EXP_MONTH => $month,
+				OrderPaymentInterface::CC_EXP_YEAR => $year
 			]);
 		}
 

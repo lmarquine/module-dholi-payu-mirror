@@ -38,8 +38,10 @@ $isCc = $block->isCc();
 			<dd><?php echo __('Last Credit Card Number'); ?></dd>
 			<dt><?php echo sprintf('xxxx xxxx xxxx %s', $block->getCcLast4()); ?></dt>
 
-			<dd><?php echo __('Installments'); ?></dd>
-			<dt><?php echo $block->getFormattedInstallmentAmount(); ?></dt>
+		  <?php if($block->hasInstallments()):?>
+				<dd><?php echo __('Installments'); ?></dd>
+				<dt><?php echo $block->getFormattedInstallmentAmount(); ?></dt>
+			<?php endif;?>
 		<?php endif;?>
 	</dl>
 </div>

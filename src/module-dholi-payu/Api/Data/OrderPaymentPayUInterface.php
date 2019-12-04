@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Api\Data;
 
-interface PaymentMethodInterface {
+interface OrderPaymentPayUInterface {
 
 	const PAYU_INTEREST_AMOUNT = 'payu_interest_amount';
 
@@ -28,9 +28,4 @@ interface PaymentMethodInterface {
 
 	const CC_NUMBER_ENC = 'cc_number';
 	const CC_CID_ENC = 'cc_cid';
-	const CC_TYPE = 'cc_type';
-	const CC_OWNER = 'cc_owner';
-	const CC_LAST_4 = 'cc_last_4';
-	const CC_EXP_MONTH = 'cc_exp_month';
-	const CC_EXP_YEAR = 'cc_exp_year';
 }

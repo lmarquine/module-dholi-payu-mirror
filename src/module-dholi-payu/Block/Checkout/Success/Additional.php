@@ -161,4 +161,10 @@ class Additional extends \Magento\Framework\View\Element\Template {
 		return __("In %1x of %2", $installments, $priceCurrency->format($installmentAmount, false));
 	}
 
+	public function hasInstallments() {
+		$installments = $this->getPayment()->getAdditionalInformation('installments');
+
+		return (null != $installments && !empty($installments));
+	}
+
 }

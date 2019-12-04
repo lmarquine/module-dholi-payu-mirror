@@ -6,4 +6,13 @@
 		<attribute code="payu_interest_amount" type="float"/>
 		<attribute code="payu_base_interest_amount" type="float"/>
 	</extension_attributes>
+
+	<extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+		<attribute type="Magento\Sales\Api\Data\OrderPaymentInterface" code="payment">
+			<join reference_table="sales_order_payment" join_on_field="entity_id" reference_field="parent_id">
+				<field>entity_id</field>
+				<field>parent_id</field>
+			</join>
+		</attribute>
+	</extension_attributes>
 </config>

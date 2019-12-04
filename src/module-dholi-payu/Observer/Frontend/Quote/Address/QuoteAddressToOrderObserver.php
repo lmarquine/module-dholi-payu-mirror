@@ -17,7 +17,7 @@ namespace Dholi\PayU\Observer\Frontend\Quote\Address;
 use Magento\Framework\DataObject\Copy;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Psr\Log\LoggerInterface;
 
 class QuoteAddressToOrderObserver implements ObserverInterface {
@@ -41,16 +41,16 @@ class QuoteAddressToOrderObserver implements ObserverInterface {
 		$quote = $observer->getEvent()->getData('quote');
 
 		$shippingAddressData = $quote->getShippingAddress()->getData();
-		if (isset($shippingAddressData[PaymentMethodInterface::PAYU_INTEREST_AMOUNT])) {
-			$order->setPayuInterestAmount($shippingAddressData[PaymentMethodInterface::PAYU_INTEREST_AMOUNT]);
-			$order->setPayuBaseInterestAmount($shippingAddressData[PaymentMethodInterface::PAYU_BASE_INTEREST_AMOUNT]);
+		if (isset($shippingAddressData[OrderPaymentPayUInterface::PAYU_INTEREST_AMOUNT])) {
+			$order->setPayuInterestAmount($shippingAddressData[OrderPaymentPayUInterface::PAYU_INTEREST_AMOUNT]);
+			$order->setPayuBaseInterestAmount($shippingAddressData[OrderPaymentPayUInterface::PAYU_BASE_INTEREST_AMOUNT]);
 
 			$order->setGrandTotal($order->getGrandTotal() + $order->getPayuInterestAmount());
 			$order->setBaseGrandTotal($order->getBaseGrandTotal() + $order->getPayuBaseInterestAmount());
 		}
-		if (isset($shippingAddressData[PaymentMethodInterface::PAYU_DISCOUNT_AMOUNT])) {
-			$order->setPayuDiscountAmount($shippingAddressData[PaymentMethodInterface::PAYU_DISCOUNT_AMOUNT]);
-			$order->setPayuBaseDiscountAmount($shippingAddressData[PaymentMethodInterface::PAYU_BASE_DISCOUNT_AMOUNT]);
+		if (isset($shippingAddressData[OrderPaymentPayUInterface::PAYU_DISCOUNT_AMOUNT])) {
+			$order->setPayuDiscountAmount($shippingAddressData[OrderPaymentPayUInterface::PAYU_DISCOUNT_AMOUNT]);
+			$order->setPayuBaseDiscountAmount($shippingAddressData[OrderPaymentPayUInterface::PAYU_BASE_DISCOUNT_AMOUNT]);
 
 			$order->setGrandTotal($order->getGrandTotal() + $order->getPayuDiscountAmount());
 			$order->setBaseGrandTotal($order->getBaseGrandTotal() + $order->getPayuBaseDiscountAmount());

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Observer;
 
-use Dholi\PayU\Api\Data\PaymentMethodInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\Event\Observer;
@@ -22,6 +22,7 @@ use Magento\Framework\HTTP\Header;
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
+use Magento\Sales\Api\Data\OrderPaymentInterface;
 use Psr\Log\LoggerInterface;
 
 class PayUBoletoDataAssignObserver extends AbstractDataAssignObserver {
@@ -50,13 +51,13 @@ class PayUBoletoDataAssignObserver extends AbstractDataAssignObserver {
 		 */
 		$paymentInfo->addData(
 			[
-				PaymentMethodInterface::CC_NUMBER_ENC => null,
-				PaymentMethodInterface::CC_CID_ENC => null,
-				PaymentMethodInterface::CC_TYPE => null,
-				PaymentMethodInterface::CC_OWNER => null,
-				PaymentMethodInterface::CC_LAST_4 => null,
-				PaymentMethodInterface::CC_EXP_MONTH => null,
-				PaymentMethodInterface::CC_EXP_YEAR => null
+				OrderPaymentPayUInterface::CC_NUMBER_ENC => null,
+				OrderPaymentPayUInterface::CC_CID_ENC => null,
+				OrderPaymentInterface::CC_TYPE => null,
+				OrderPaymentInterface::CC_OWNER => null,
+				OrderPaymentInterface::CC_LAST_4 => null,
+				OrderPaymentInterface::CC_EXP_MONTH => null,
+				OrderPaymentInterface::CC_EXP_YEAR => null
 			]
 		);
 		$paymentInfo->setAdditionalInformation('installments', null);

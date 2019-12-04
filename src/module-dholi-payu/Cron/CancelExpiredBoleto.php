@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Cron;
 
+use Dholi\Payment\Api\Data\OrderPaymentInterface;
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Dholi\PayU\Gateway\Config\Boleto\Config;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\ObjectManager;
@@ -49,8 +51,8 @@ class CancelExpiredBoleto {
 		if ($this->config->isCancelable()) {
 			$searchCriteria = $this->searchCriteriaBuilder
 				->addFilter('method', \Dholi\PayU\Model\Ui\Boleto\ConfigProvider::CODE, 'eq')
-				->addFilter('payu_transaction_state', \Dholi\PayU\Gateway\PayU\Enumeration\PayUTransactionState::PENDING()->key(), 'eq')
-				->addFilter('boleto_cancellation', date('Y-m-d H:i:s', strtotime('now')), 'lt')
+				->addFilter(OrderPaymentPayUInterface::TRANSACTION_STATE, \Dholi\PayU\Gateway\PayU\Enumeration\PayUTransactionState::PENDING()->key(), 'eq')
+				->addFilter(OrderPaymentInterface::BOLETO_CANCEL_AT, date('Y-m-d H:i:s', strtotime('now')), 'lt')
 				->create();
 
 			$paymentList = $this->paymentRepository->getList($searchCriteria)->getItems();
@@ -61,12 +63,14 @@ class CancelExpiredBoleto {
 				foreach ($paymentList as $payment) {
 					try {
 						$salesConnection->beginTransaction();
+						$this->logger->info(sprintf("%s - Cancelando boleto - Pedido %s", __METHOD__, $payment->getOrder()->getIncrementId()));
 						$processor->cancelPayment($payment);
-						$salesConnection->commit();
 					} catch (\Exception $e) {
-						$this->logger->critical($e->getMessage());
-						$this->logger->critical($e->getTraceAsString());
+						$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));
+						$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getTraceAsString()));
 						$salesConnection->rollBack();
+					} finally {
+						$salesConnection->commit();
 					}
 				}
 			}

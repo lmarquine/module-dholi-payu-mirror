@@ -104,23 +104,28 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 	}
 
 	public function getMerchantId($storeId = null): string {
-		return trim($this->getValue(self::KEY_MERCHANT_ID, $storeId));
+		$v = $this->getValue(self::KEY_MERCHANT_ID, $storeId);
+		return (!empty($v) ? trim($v) : '');
 	}
 
 	public function getApiKey($storeId = null): string {
-		return trim($this->getValue(self::KEY_API_KEY, $storeId));
+		$v = $this->getValue(self::KEY_API_KEY, $storeId);
+		return (!empty($v) ? trim($v) : '');
 	}
 
 	public function getAccountId($storeId = null): string {
-		return trim($this->getValue(self::KEY_ACCOUNT_ID, $storeId));
+		$v = $this->getValue(self::KEY_ACCOUNT_ID, $storeId);
+		return (!empty($v) ? trim($v) : '');
 	}
 
 	public function getLoginApi($storeId = null): string {
-		return trim($this->getValue(self::KEY_LOGIN_API, $storeId));
+		$v = $this->getValue(self::KEY_LOGIN_API, $storeId);
+		return (!empty($v) ? trim($v) : '');
 	}
 
 	public function getPublicKey($storeId = null): string {
-		return trim($this->getValue(self::KEY_PUBLIC_KEY, $storeId));
+		$v = $this->getValue(self::KEY_PUBLIC_KEY, $storeId);
+		return (!empty($v) ? trim($v) : '');
 	}
 
 	public function getReceipt($storeId = null) {

@@ -19,12 +19,14 @@ use Magento\Framework\Api\Search\FilterGroup;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Sales\Model\Order\Payment\Repository;
+use Magento\Sales\Api\Data\OrderInterface;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\OrderRepository;
 use Psr\Log\LoggerInterface;
 
-class SyncronizePaymentInPendingState {
+class SyncronizeOrderNewState {
 
-	private $paymentRepository;
+	private $orderRepository;
 
 	private $searchCriteriaBuilder;
 
@@ -33,16 +35,19 @@ class SyncronizePaymentInPendingState {
 	private $logger;
 
 	public function __construct(LoggerInterface $logger,
-	                            Repository $paymentRepository,
+	                            OrderRepository $orderRepository,
 	                            SearchCriteriaBuilder $searchCriteriaBuilder,
 	                            ResourceConnection $connectionPool = null) {
 		$this->logger = $logger;
-		$this->paymentRepository = $paymentRepository;
+		$this->orderRepository = $orderRepository;
 		$this->searchCriteriaBuilder = $searchCriteriaBuilder;
 		$this->connectionPool = $connectionPool ?: ObjectManager::getInstance()->get(ResourceConnection::class);
 	}
 
 	public function execute() {
+		/**
+		 * Payment Methods
+		 */
 		$filterCc = new Filter();
 		$filterCc->setField('method')->setValue(\Dholi\PayU\Model\Ui\Cc\ConfigProvider::CODE)->setConditionType('eq');
 
@@ -55,28 +60,45 @@ class SyncronizePaymentInPendingState {
 		$filterEfecty = new Filter();
 		$filterEfecty->setField('method')->setValue(\Dholi\PayU\Model\Ui\Efecty\ConfigProvider::CODE)->setConditionType('eq');
 
-		$paymentGroup = new FilterGroup();
-		$paymentGroup->setFilters([$filterCc, $filterBoleto, $filterBaloto, $filterEfecty]);
+		$filterPaymentMethodGroup = new FilterGroup();
+		$filterPaymentMethodGroup->setFilters([$filterCc, $filterBoleto, $filterBaloto, $filterEfecty]);
 
-		// status
-		$filterStatus = new Filter();
-		$filterStatus->setField('payu_transaction_state')->setValue(\Dholi\PayU\Gateway\PayU\Enumeration\PayUTransactionState::PENDING()->key())->setConditionType('eq');
+		/**
+		 * Payment State
+		 */
+		$filterPaymentStatus = new Filter();
+		$filterPaymentStatus->setField('payu_transaction_state')->setValue(\Dholi\PayU\Gateway\PayU\Enumeration\PayUTransactionState::APPROVED()->key())->setConditionType('eq');
 
-		$statusGroup = new FilterGroup();
-		$statusGroup->setFilters([$filterStatus]);
+		$filterPaymentStatusGroup = new FilterGroup();
+		$filterPaymentStatusGroup->setFilters([$filterPaymentStatus]);
 
-		$searchCriteria = $this->searchCriteriaBuilder->setFilterGroups([$paymentGroup, $statusGroup])->create();
-		$paymentList = $this->paymentRepository->getList($searchCriteria)->getItems();
+		/**
+		 * Order State
+		 */
+		$filterOrderState = new Filter();
+		$filterOrderState->setField('state')->setValue(Order::STATE_NEW)->setConditionType('eq');
 
-		if (count($paymentList)) {
+		$filterOrderGroup = new FilterGroup();
+		$filterOrderGroup->setFilters([$filterOrderState]);
+
+		/**
+		 * Criteria
+		 */
+		$searchCriteria = $this->searchCriteriaBuilder->setFilterGroups([$filterOrderGroup, $filterPaymentStatusGroup, $filterPaymentMethodGroup])->create();
+		$collection = $this->orderRepository->getList($searchCriteria);
+
+		//$this->logger->info(sprintf("%s SQL %s", __METHOD__, $collection->getSelect()));
+		$orderList = $collection->getItems();
+
+		if (count($orderList)) {
 			$processor = ObjectManager::getInstance()->get(\Dholi\PayU\Model\PaymentManagement\Processor::class);
 			$salesConnection = $this->connectionPool->getConnection('sales');
 
-			foreach ($paymentList as $payment) {
+			foreach ($orderList as $order) {
 				try {
 					$salesConnection->beginTransaction();
-					$this->logger->info(sprintf("%s - Sincronizando pagamento - Pedido %s", __METHOD__, $payment->getOrder()->getIncrementId()));
-					$processor->syncronize($payment, false, $payment->getOrder()->getGrandTotal());
+					$this->logger->info(sprintf("%s - Sincronizando Pedido %s", __METHOD__, $order->getIncrementId()));
+					$processor->syncronize($order->getPayment(), false, $order->getGrandTotal());
 				} catch (\Exception $e) {
 					$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));
 					$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getTraceAsString()));
