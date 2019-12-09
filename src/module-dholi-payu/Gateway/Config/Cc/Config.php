@@ -60,18 +60,18 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 	}
 
 	public function getCcDiscount($storeId = null) {
-		$value = $this->getValue(self::KEY_CC_DISCOUNT, $storeId);
-		if ($value) {
-			return str_replace(',', '.', $value);
+		$v = $this->getValue(self::KEY_CC_DISCOUNT, $storeId);
+		if ($v) {
+			return str_replace(',', '.', $v);
 		}
 
 		return 0.00;
 	}
 
 	public function getCcMinInstallment($storeId = null) {
-		$value = $this->getValue(self::KEY_CC_MIN_INSTALLMENT, $storeId);
-		if ($value) {
-			return str_replace(',', '.', $value);
+		$v = $this->getValue(self::KEY_CC_MIN_INSTALLMENT, $storeId);
+		if ($v) {
+			return str_replace(',', '.', $v);
 		}
 
 		return 0.00;
@@ -86,11 +86,11 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 	}
 
 	public function getCcInterest($storeId = null) {
-		$value = trim($this->getValue(self::KEY_CC_INTEREST, $storeId));
-		if ($value) {
-			return str_replace(',', '.', $value);
+		$v = trim($this->getValue(self::KEY_CC_INTEREST, $storeId));
+		if ($v) {
+			return str_replace(',', '.', $v);
 		}
-		return $value;
+		return $v;
 	}
 
 	public function getDniNumberMask($currency) {
