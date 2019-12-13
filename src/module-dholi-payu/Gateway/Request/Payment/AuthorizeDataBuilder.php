@@ -188,18 +188,9 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		 * Payer
 		 */
 		$payment = $paymentDataObject->getPayment();
-		$payerBirthDate = null;
-		$payerTaxVat = null;
-		$payerFone = null;
-		if ($payment->getAdditionalInformation('creditCardHolderAnother') && $payment->getAdditionalInformation('creditCardHolderAnother') == 1) {
-			$payerTaxVat = preg_replace('/\D/', '', $payment->getAdditionalInformation('creditCardHolderDninumber'));
-			$payerFone = $payment->getAdditionalInformation('creditCardHolderPhone');
-			//$payerBirthDate = $payment->getAdditionalInformation('creditCardHolderBirthDate');
-		} else {
-			$payerTaxVat = $taxvat;
-			$payerFone = $billingAddress->getTelephone();
-			//$payerBirthDate = $order->getCustomerDob();
-		}
+		$payerTaxVat = $taxvat;
+		$payerFone = $billingAddress->getTelephone();
+		//$payerBirthDate = $order->getCustomerDob();
 
 		$name = trim($billingAddress->getFirstname()) . ' ' . trim($billingAddress->getLastname());
 		$result[self::PAYER] = [

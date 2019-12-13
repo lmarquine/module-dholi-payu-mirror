@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Gateway\Config\Cc;
 
-use Dholi\PayU\Gateway\PayU\Enumeration\Mask;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 
@@ -34,9 +33,6 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 
 	const KEY_CC_MIN_INSTALLMENT = 'min_installment';
 
-	/**
-	 * @var \Magento\Framework\Serialize\Serializer\Json
-	 */
 	private $serializer;
 
 	public function __construct(ScopeConfigInterface $scopeConfig,
@@ -91,13 +87,5 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 			return str_replace(',', '.', $v);
 		}
 		return $v;
-	}
-
-	public function getDniNumberMask($currency) {
-		return Mask::memberByKey($currency)->getDniMask();
-	}
-
-	public function getPhoneMask($currency) {
-		return Mask::memberByKey($currency)->getFoneMask();
 	}
 }

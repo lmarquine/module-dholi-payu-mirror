@@ -89,11 +89,5 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 				$paymentInfo->setAdditionalInformation('installmentAmount', floatval($arrayex[1]));
 			}
 		}
-		if ($requestData->getCcHolderAnother() && $requestData->getCcHolderAnother() == 1) {
-			$paymentInfo->setAdditionalInformation('creditCardHolderAnother', 1);
-			$paymentInfo->setAdditionalInformation('creditCardHolderDninumber', $requestData->getCcHolderDninumber());
-			$paymentInfo->setAdditionalInformation('creditCardHolderPhone', $requestData->getCcHolderPhone());
-			$paymentInfo->setAdditionalInformation('creditCardHolderBirthDate', $requestData->getCcHolderBirthDate());
-		}
 	}
 }

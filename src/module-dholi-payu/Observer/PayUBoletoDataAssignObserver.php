@@ -62,9 +62,5 @@ class PayUBoletoDataAssignObserver extends AbstractDataAssignObserver {
 		);
 		$paymentInfo->setAdditionalInformation('installments', null);
 		$paymentInfo->setAdditionalInformation('installmentAmount', null);
-		$paymentInfo->setAdditionalInformation('creditCardHolderAnother', null);
-		$paymentInfo->setAdditionalInformation('creditCardHolderDninumber', null);
-		$paymentInfo->setAdditionalInformation('creditCardHolderPhone', null);
-		$paymentInfo->setAdditionalInformation('creditCardHolderBirthDate', null);
 	}
 }

@@ -92,16 +92,10 @@ class ConfigProvider implements ConfigProviderInterface {
 						'show' => $showIcon,
 						'brands' => $brands
 					],
-					'mask' => [
-						'dniNumber' => $this->ccConfig->getDniNumberMask($currency),
-						'phone' => $this->ccConfig->getPhoneMask($currency)
-					]
 				]
 			];
 		}
 
-		return [
-			'payment' => $payment
-		];
+		return ['payment' => $payment];
 	}
 }
