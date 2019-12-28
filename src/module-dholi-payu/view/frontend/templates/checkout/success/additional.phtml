@@ -20,14 +20,14 @@ $isCc = $block->isCc();
 
 			<dd><?php echo __('Boleto Link'); ?></dd>
 			<dt class="link">
-				<a href="<?php echo $block->escapeUrl($block->getBoletoLink()); ?>">
+				<a href="<?php echo $block->escapeUrl($block->getBoletoLink()); ?>" target="_blank">
 					<?php echo $block->escapeHtml(__('Click here to open the Boleto')); ?>
 				</a>
 			</dt>
 
 			<dd><?php echo __('Boleto PDF'); ?></dd>
 			<dt class="pdf">
-				<a href="<?php echo $block->escapeUrl($block->getBoletoPdfLink()); ?>">
+				<a href="<?php echo $block->escapeUrl($block->getBoletoPdfLink()); ?>" target="_blank">
 					<?php echo $block->escapeHtml(__('Click here to download the Boleto PDF')); ?>
 				</a>
 			</dt>

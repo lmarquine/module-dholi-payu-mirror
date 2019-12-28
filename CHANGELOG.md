@@ -1,3 +1,9 @@
+# 1.0.2
+## 
+ 
+1. [](#added)
+    * Abrir o link de impressão e link do pdf do boleto bancário em nova janela.
+
 # 1.0.1
 ## 27/12/2019
 
