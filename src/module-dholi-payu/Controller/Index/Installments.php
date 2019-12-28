@@ -23,7 +23,6 @@ use Dholi\Core\Enumeration\HttpStatus;
 
 class Installments extends Action {
 
-
 	protected $resultJsonFactory;
 
 	private $installmentsPlugin;
