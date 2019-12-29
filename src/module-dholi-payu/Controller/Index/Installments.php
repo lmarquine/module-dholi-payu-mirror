@@ -18,7 +18,6 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\App\Action\Action;
 use Dholi\PayU\Plugin\Installments as InstallmentsPlugin;
-use Psr\Log\LoggerInterface;
 use Dholi\Core\Enumeration\HttpStatus;
 
 class Installments extends Action {
@@ -27,15 +26,11 @@ class Installments extends Action {
 
 	private $installmentsPlugin;
 
-	private $logger;
-
 	public function __construct(Context $context,
 	                            JsonFactory $resultJsonFactory,
-	                            InstallmentsPlugin $installmentsPlugin,
-	                            LoggerInterface $logger) {
+	                            InstallmentsPlugin $installmentsPlugin) {
 		$this->resultJsonFactory = $resultJsonFactory;
 		$this->installmentsPlugin = $installmentsPlugin;
-		$this->logger = $logger;
 
 		return parent::__construct($context);
 	}
