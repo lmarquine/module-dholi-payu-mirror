@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.2
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -97,7 +97,7 @@ class SyncronizeOrderNewState {
 			foreach ($orderList as $order) {
 				try {
 					$salesConnection->beginTransaction();
-					$this->logger->info(sprintf("%s - Sincronizando Pedido %s", __METHOD__, $order->getIncrementId()));
+					$this->logger->info(sprintf("%s - Synchronizing Order %s", __METHOD__, $order->getIncrementId()));
 					$processor->syncronize($order->getPayment(), false, $order->getGrandTotal());
 				} catch (\Exception $e) {
 					$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));

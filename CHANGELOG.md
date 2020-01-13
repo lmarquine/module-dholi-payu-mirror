@@ -1,15 +1,13 @@
-# 1.0.3
-##
-
-1. [](#fixed)
-    * Em alguns casos, a URL de notificação não recebe o parâmetro "reference_sale"
-
 # 1.0.2
-## 
+## 13/01/2020
  
 1. [](#added)
     * Abrir o link de impressão e link do pdf do boleto bancário em nova janela.
 
+2. [](#fixed)
+    * URL de notificação não recebia o parâmetro "reference_sale" no boleto bancário
+    * Enume PayUOrderStatus não tinha o método isCancelled()
+    
 # 1.0.1
 ## 27/12/2019
 

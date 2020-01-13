@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.2
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -63,7 +63,7 @@ class CancelExpiredBoleto {
 				foreach ($paymentList as $payment) {
 					try {
 						$salesConnection->beginTransaction();
-						$this->logger->info(sprintf("%s - Cancelando boleto - Pedido %s", __METHOD__, $payment->getOrder()->getIncrementId()));
+						$this->logger->info(sprintf("%s - Canceling boleto - Order %s", __METHOD__, $payment->getOrder()->getIncrementId()));
 						$processor->cancelPayment($payment);
 					} catch (\Exception $e) {
 						$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));

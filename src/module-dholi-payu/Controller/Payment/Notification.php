@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.2
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -52,13 +52,13 @@ class Notification extends Action implements CsrfAwareActionInterface {
 		$data = $this->getRequest()->getPostValue();
 		$response = HttpStatus::UNPROCESSABLE_ENTITY()->getCode();
 		try {
-			$this->logger->info(sprintf("%s - Recebendo notificação PayU [%s]", __METHOD__, json_encode($data)));
+			$this->logger->info(sprintf("%s - Receiving PayU notification [%s]", __METHOD__, json_encode($data)));
 
 			if ($data && isset($data['reference_sale']) && isset($data['state_pol'])) {
 				$order = $this->orderFactory->create()->loadByIncrementId($data['reference_sale']);
 
 				if ($order && $order->getId() && !$order->isCanceled()) {
-					$this->logger->info(sprintf("%s - Processando notificação PayU. Pedido [%s] - Status [%s].", __METHOD__, $data['reference_sale'], $data['state_pol']));
+					$this->logger->info(sprintf("%s - Processing PayU notification. Order [%s] - Status [%s].", __METHOD__, $data['reference_sale'], $data['state_pol']));
 					$salesConnection = $this->connectionPool->getConnection('sales');
 					$salesConnection->beginTransaction();
 
@@ -76,7 +76,7 @@ class Notification extends Action implements CsrfAwareActionInterface {
 
 			$response = HttpStatus::INTERNAL_SERVER_ERROR()->getCode();
 		}
-		$this->logger->info(sprintf("%s - Notificação PayU processada. HTTP Code Response [%s].", __METHOD__, $response));
+		$this->logger->info(sprintf("%s - PayU notification OK. HTTP Code Response [%s].", __METHOD__, $response));
 
 		$this->getResponse()->clearHeader('Content-Type')->setHeader('Content-Type', 'text/html')->setHttpResponseCode($response)->setBody($response);
 

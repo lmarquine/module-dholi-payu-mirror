@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.2
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -39,6 +39,10 @@ class PayUTransactionState extends AbstractMultiton {
 
 	public function isCancelled() {
 		return $this->key() == 'CANCELLED';
+	}
+
+	public function isExpired() {
+		return $this->key() == 'EXPIRED';
 	}
 
 	protected static function initializeMembers() {

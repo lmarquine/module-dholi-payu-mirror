@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.0
+* @version      1.0.2
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -41,6 +41,8 @@ class Processor {
 		$payment = $this->paymentDetailsOperation->details($payment, $isOnline, $amount);
 		$payuOrderStatus = $payment->getPayuOrderStatus();
 
+		$this->logger->info(sprintf("%s - Synchronizing with PayU [%s] - Status [%s]", __METHOD__, $payment->getOrder()->getIncrementId(), $payuOrderStatus->key()));
+
 		if ($payuOrderStatus->isCaptured()) {
 			$payment = $this->capturePayment($payment);
 		} elseif ($payuOrderStatus->isCancelled()) {
@@ -59,8 +61,22 @@ class Processor {
 	}
 
 	public function cancelPayment(OrderPaymentInterface $payment): OrderPaymentInterface {
-		$message = __('Canceled order online') . ' ' . __('Transaction ID: "%1"', $payment->getTransactionId());
-		$payment->getOrder()->cancel()->addStatusHistoryComment($message, false)->setIsCustomerNotified(true)->save();
+		$order = $payment->getOrder();
+		if (!$order->hasInvoices()) {
+			if ($order->canCancel()) {
+
+				$this->logger->info(sprintf("%s - Order [%s] has been canceled.", __METHOD__, $order->getIncrementId()));
+				$message = __('Canceled order online') . ' ' . __('Transaction ID: "%1"', $payment->getTransactionId());
+
+				$order->setActionFlag(\Magento\Sales\Model\Order::ACTION_FLAG_CANCEL, true);
+				$order->addStatusHistoryComment($message, false)->setIsCustomerNotified(true);
+				$order->cancel()->save();
+			} else {
+				$this->logger->info(sprintf("%s - Order [%s] can not be canceled.", __METHOD__, $order->getIncrementId()));
+			}
+		} else {
+			$this->logger->info(sprintf("%s - Order [%s] has already an invoice so cannot be canceled.", __METHOD__, $order->getIncrementId()));
+		}
 
 		return $payment;
 	}

@@ -290,7 +290,7 @@
 	<virtualType name="DholiPayUVoidRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
 		<arguments>
 			<argument name="builders" xsi:type="array">
-				<item name="general" xsi:type="string">Dholi\PayU\Gateway\Request\Payment\VoidDataBuilder</item>
+				<item name="cancel" xsi:type="string">Dholi\PayU\Gateway\Request\Payment\VoidDataBuilder</item>
 			</argument>
 		</arguments>
 	</virtualType>
@@ -338,7 +338,7 @@
 	<virtualType name="DholiPayUVoidPaymentHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
 		<arguments>
 			<argument name="handlers" xsi:type="array">
-				<item name="payment_details" xsi:type="string">Dholi\PayU\Gateway\Response\Payment\PaymentVoidDetailsHandler</item>
+				<item name="cancel" xsi:type="string">Dholi\PayU\Gateway\Response\Payment\PaymentVoidDetailsHandler</item>
 			</argument>
 		</arguments>
 	</virtualType>
