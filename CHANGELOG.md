@@ -1,3 +1,9 @@
+# 1.0.3
+##
+
+1. [](#fixed)
+    * Em alguns casos, a URL de notificação não recebe o parâmetro "reference_sale"
+
 # 1.0.2
 ## 
  

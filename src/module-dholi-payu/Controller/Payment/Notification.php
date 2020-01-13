@@ -76,7 +76,7 @@ class Notification extends Action implements CsrfAwareActionInterface {
 
 			$response = HttpStatus::INTERNAL_SERVER_ERROR()->getCode();
 		}
-		$this->logger->info(sprintf("%s - Notificação PayU processada. Pedido [%s] - HTTP Code Response [%s].", __METHOD__, $data['reference_sale'], $response));
+		$this->logger->info(sprintf("%s - Notificação PayU processada. HTTP Code Response [%s].", __METHOD__, $response));
 
 		$this->getResponse()->clearHeader('Content-Type')->setHeader('Content-Type', 'text/html')->setHttpResponseCode($response)->setBody($response);
 
