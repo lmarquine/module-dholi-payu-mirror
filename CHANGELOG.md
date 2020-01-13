@@ -6,7 +6,7 @@
 
 2. [](#fixed)
     * URL de notificação não recebia o parâmetro "reference_sale" no boleto bancário
-    * Enume PayUOrderStatus não tinha o método isCancelled()
+    * Enum PayUOrderStatus não tinha o método isCancelled()
     
 # 1.0.1
 ## 27/12/2019
