@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.2
+* @version      1.0.3
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -64,7 +64,6 @@ class Processor {
 		$order = $payment->getOrder();
 		if (!$order->hasInvoices()) {
 			if ($order->canCancel()) {
-
 				$this->logger->info(sprintf("%s - Order [%s] has been canceled.", __METHOD__, $order->getIncrementId()));
 				$message = __('Canceled order online') . ' ' . __('Transaction ID: "%1"', $payment->getTransactionId());
 

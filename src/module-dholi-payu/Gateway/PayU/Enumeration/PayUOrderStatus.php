@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.2
+* @version      1.0.3
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -23,7 +23,7 @@ class PayUOrderStatus extends AbstractMultiton {
 	}
 
 	public function isCancelled() {
-		return ($this->key() == 'CANCELLED');
+		return ($this->key() == 'CANCELLED' || $this->key() == 'DECLINED');
 	}
 
 	protected static function initializeMembers() {
