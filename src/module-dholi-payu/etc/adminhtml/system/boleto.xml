@@ -42,7 +42,16 @@
 			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 			<config_path>payment/dholi_payments_payu_boleto/cancelable</config_path>
 		</field>
-		<field id="cancel_on_friday" translate="label tooltip" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="0">
+		<field id="cancel_on_thursday" translate="label tooltip" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+			<label>Shopping on Thursday</label>
+			<frontend_class>required-entry validate-number</frontend_class>
+			<config_path>payment/dholi_payments_payu_boleto/cancel_on_thursday</config_path>
+			<tooltip>Deadline In days</tooltip>
+			<depends>
+				<field id="cancel">1</field>
+			</depends>
+		</field>
+		<field id="cancel_on_friday" translate="label tooltip" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Shopping on Friday</label>
 			<frontend_class>required-entry validate-number</frontend_class>
 			<config_path>payment/dholi_payments_payu_boleto/cancel_on_friday</config_path>
@@ -51,7 +60,7 @@
 				<field id="cancel">1</field>
 			</depends>
 		</field>
-		<field id="cancel_on_saturday" translate="label tooltip" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0">
+		<field id="cancel_on_saturday" translate="label tooltip" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="0">
 			<label>Shopping on Saturday</label>
 			<frontend_class>required-entry validate-number</frontend_class>
 			<config_path>payment/dholi_payments_payu_boleto/cancel_on_saturday</config_path>
@@ -60,8 +69,8 @@
 				<field id="cancel">1</field>
 			</depends>
 		</field>
-		<field id="cancel_on_sunday" translate="label tooltip" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0">
-			<label>Shopping between Sunday and Thursday</label>
+		<field id="cancel_on_sunday" translate="label tooltip" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="0">
+			<label>Shopping between Sunday and Wednesday</label>
 			<frontend_class>required-entry validate-number</frontend_class>
 			<config_path>payment/dholi_payments_payu_boleto/cancel_on_sunday</config_path>
 			<tooltip>Deadline In days</tooltip>

@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.3
+* @version      1.0.4
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -57,6 +57,10 @@ class BoletoAuthorisationDetailsHandler implements HandlerInterface {
 			$incrementDays = null;
 
 			switch ($dayOfWeek) {
+				case 4:
+					$incrementDays = $this->config->getCancelOnThursday($storeId);
+					break;
+
 				case 5:
 					$incrementDays = $this->config->getCancelOnFriday($storeId);
 					break;
@@ -71,7 +75,7 @@ class BoletoAuthorisationDetailsHandler implements HandlerInterface {
 			}
 			$totalDays = $this->config->getExpiration($storeId) + $incrementDays;
 			$cancellationDate = strftime("%Y-%m-%d %H:%M:%S", strtotime("$todayFmt +$totalDays day"));
-			$payment->setBoletoCancellation($cancellationDate);
+			$payment->setBoletoCancelAt($cancellationDate);
 		} catch (\Exception $e) {
 
 		}

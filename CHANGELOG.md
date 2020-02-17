@@ -1,3 +1,13 @@
+# 1.0.4
+## 17/02/2020
+1. [](#added)
+    * Configuração para cancelar boletos gerados na quinta-feira
+    
+# 1.0.3
+## 12/02/2020
+1. [](#fixed)
+    * Pedidos com status 'DECLINED' não estavam sendo cancelados.
+
 # 1.0.2
 ## 13/01/2020
  

@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.3
+* @version      1.0.4
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -26,6 +26,8 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 	const EXPIRATION = 'expiration';
 
 	const CANCELABLE = 'cancelable';
+
+	const CANCEL_ON_THURSDAY = 'cancel_on_thursday';
 
 	const CANCEL_ON_FRIDAY = 'cancel_on_friday';
 
@@ -53,6 +55,10 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
 
 	public function isCancelable($storeId = null) {
 		return (bool)$this->getValue(self::CANCELABLE, $storeId);
+	}
+
+	public function getCancelOnThursday($storeId = null) {
+		return (int)trim($this->getValue(self::CANCEL_ON_THURSDAY, $storeId));
 	}
 
 	public function getCancelOnFriday($storeId = null) {

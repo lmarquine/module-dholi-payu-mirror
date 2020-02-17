@@ -60,6 +60,7 @@
 				O prazo de entrega passará a valer a partir do momento em que o banco confirmar o pagamento do boleto. O processo poderá levar até 72h.]]>
 				</instructions>
 				<cancelable>1</cancelable>
+				<cancel_on_thursday>7</cancel_on_thursday>
 				<cancel_on_friday>6</cancel_on_friday>
 				<cancel_on_saturday>5</cancel_on_saturday>
 				<cancel_on_sunday>4</cancel_on_sunday>
