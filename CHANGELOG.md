@@ -1,3 +1,9 @@
+# 1.0.5
+## xx/xx/2020
+
+1. [](#changed)
+    * Alteração nos arquivos de tradução
+    
 # 1.0.4
 ## 17/02/2020
 1. [](#added)

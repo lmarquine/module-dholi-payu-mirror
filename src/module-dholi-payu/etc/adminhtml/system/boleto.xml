@@ -38,7 +38,7 @@
 			<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
 		</field>
 		<field id="cancelable" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="0">
-			<label>Cancel boletos automatically?</label>
+			<label>Cancel orders automatically?</label>
 			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 			<config_path>payment/dholi_payments_payu_boleto/cancelable</config_path>
 		</field>

@@ -3,7 +3,7 @@
 A PayU é uma solução completa em pagamentos online, presente em quatro continentes. A PayU oferece serviços financeiros para compradores e vendedores pela internet.
 
 ### Página do Projeto
-Consule a [página do projeto PayU](https://www.dholi.dev/projetos/payu) para mais detalhes.
+Consule a [página do projeto PayU](https://www.dholi.dev/payu) para mais detalhes.
 
 ### Composer
 Consule a [página do projeto no Packagist](https://packagist.org/packages/dholi/module-dholi-payu) para mais detalhes.
@@ -15,10 +15,10 @@ Consule a [página do projeto no GitHub](https://github.com/dholidev/module-dhol
 Consule a [base de ajuda](https://docs.dholi.dev/payu) para mais detalhes.
 
 ### Recursos e Funcionalidades
-Consule [recursos e funcionalidade](https://docs.dholi.dev/payu/iniciando) para mais detalhes.
+Consule [recursos e funcionalidade](https://docs.dholi.dev/payu) para mais detalhes.
 
 ### Requisitos Técnicos
-Consule [requisitos técnicos](https://docs.dholi.dev/payu/iniciando) para mais detalhes.
+Consule [requisitos técnicos](https://docs.dholi.dev/payu) para mais detalhes.
 
 ### Notas da Versão
 Consule [notas da versão](https://github.com/dholidev/module-dholi-payu-mirror/blob/master/CHANGELOG.md) para mais detalhes.
