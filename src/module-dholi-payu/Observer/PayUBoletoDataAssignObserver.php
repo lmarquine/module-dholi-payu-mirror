@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.4
+* @version      1.0.5
 * @license      https://www.dholi.dev/license/
 *
 */

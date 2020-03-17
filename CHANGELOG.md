@@ -1,5 +1,5 @@
 # 1.0.5
-## xx/xx/2020
+## 17/03/2020
 
 1. [](#changed)
     * Alteração nos arquivos de tradução
