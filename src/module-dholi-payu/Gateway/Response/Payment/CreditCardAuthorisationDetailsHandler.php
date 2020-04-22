@@ -17,12 +17,15 @@ namespace Dholi\PayU\Gateway\Response\Payment;
 use Dholi\PayU\Gateway\PayU\Enumeration\PayUTransactionState;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Magento\Sales\Api\Data\OrderPaymentInterface;
 use Magento\Sales\Model\Order;
+use Psr\Log\LoggerInterface;
 
 class CreditCardAuthorisationDetailsHandler implements HandlerInterface {
 
-	public function __construct() {
+	private $logger;
+
+	public function __construct(LoggerInterface $logger) {
+		$this->logger = $logger;
 	}
 
 	/**
@@ -30,7 +33,7 @@ class CreditCardAuthorisationDetailsHandler implements HandlerInterface {
 	 */
 	public function handle(array $handlingSubject, array $response) {
 		$paymentDataObject = SubjectReader::readPayment($handlingSubject);
-		$transaction = json_decode($response[0])->transactionResponse;
+		$transaction = $response[0]['transaction']->transactionResponse;
 
 		$transactionState = PayUTransactionState::memberByKey($transaction->state);
 

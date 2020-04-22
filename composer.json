@@ -19,6 +19,7 @@
   "require": {
     "php": "~7.2",
     "magento/framework": ">=102.0.2",
+    "magento/module-vault": "101.1.*",
     "dholi/module-dholi-payment": "dev-master"
   },
   "license": [

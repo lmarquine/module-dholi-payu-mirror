@@ -22,9 +22,6 @@ use Magento\Sales\Api\InvoiceRepositoryInterface;
 
 class PaymentDetailsOperation {
 
-	public function __construct() {
-	}
-
 	public function details(OrderPaymentInterface $payment) {
 		$order = $payment->getOrder();
 

@@ -36,9 +36,9 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 	private $httpHeader;
 
 	public function __construct(LoggerInterface $logger,
-	                            EncryptorInterface $encryptor,
-	                            CookieManagerInterface $cookieManager,
-	                            Header $httpHeader) {
+															EncryptorInterface $encryptor,
+															CookieManagerInterface $cookieManager,
+															Header $httpHeader) {
 		$this->logger = $logger;
 		$this->encryptor = $encryptor;
 		$this->cookieManager = $cookieManager;
@@ -88,6 +88,11 @@ class PayUCcDataAssignObserver extends AbstractDataAssignObserver {
 				$paymentInfo->setAdditionalInformation('installments', intval($arrayex[0]));
 				$paymentInfo->setAdditionalInformation('installmentAmount', floatval($arrayex[1]));
 			}
+		}
+
+		$paymentInfo->setAdditionalInformation('activePaymentToken', false);
+		if ($requestData->getIsActivePaymentTokenEnabler()) {
+			$paymentInfo->setAdditionalInformation('activePaymentToken', true);
 		}
 	}
 }

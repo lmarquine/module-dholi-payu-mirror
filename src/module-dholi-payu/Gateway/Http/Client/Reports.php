@@ -33,23 +33,24 @@ class Reports implements ClientInterface {
 	public function placeRequest(TransferInterface $transferObject) {
 		$log = [
 			'request' => $transferObject->getBody(),
-			'request_uri' => $transferObject->getUri()
+			'requestUri' => $transferObject->getUri()
 		];
-		$result = [];
+		$response = null;
 		$client = $this->clientFactory->create();
 		$client->setHeaders($transferObject->getHeaders());
 
 		try {
 			$client->post($transferObject->getUri(), $transferObject->getBody());
 
-			$result = [$client->getBody()];
-			$log['response'] = $client->getBody();
+			$transactionResponse = json_decode($client->getBody());
+			$response = ['transaction' => $transactionResponse];
+			$log['response'] = json_encode($response);
 		} catch (\Magento\Payment\Gateway\Http\ConverterException $e) {
 			throw $e;
 		} finally {
 			$this->logger->info(var_export($log, true));
 		}
 
-		return $result;
+		return [$response];
 	}
 }

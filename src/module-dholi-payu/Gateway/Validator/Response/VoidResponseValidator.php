@@ -33,7 +33,8 @@ class VoidResponseValidator extends AbstractValidator {
 	 * @inheritdoc
 	 */
 	public function validate(array $validationSubject) {
-		$response = json_decode(SubjectReader::readResponse($validationSubject)[0]);
+		$subjectResponse = SubjectReader::readResponse($validationSubject);
+		$transactionResponse = $subjectResponse['transaction'];
 
 		$isValid = true;
 		$errorMessages = [];
@@ -42,14 +43,8 @@ class VoidResponseValidator extends AbstractValidator {
 		/**
 		 * o cancelamento ignora erros do gateway / adquirente
 		 */
-		/*
-		if (property_exists($response, 'code') && $response->code == 'ERROR') {
-			$isValid = false;
-			$errorMessages = array_merge($errorMessages, [$response->error]);
-		}*/
-
 		if (!$isValid) {
-			$errorCodes = $this->errorCodeProvider->getErrorCodes($response);
+			$errorCodes = $this->errorCodeProvider->getErrorCodes($transactionResponse);
 		}
 
 		return $this->createResult($isValid, $errorMessages, $errorCodes);

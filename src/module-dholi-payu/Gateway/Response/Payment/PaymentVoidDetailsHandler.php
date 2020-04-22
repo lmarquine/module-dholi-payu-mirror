@@ -22,9 +22,6 @@ use Magento\Sales\Model\Order;
 
 class PaymentVoidDetailsHandler implements HandlerInterface {
 
-	public function __construct() {
-	}
-
 	/**
 	 * @inheritdoc
 	 */

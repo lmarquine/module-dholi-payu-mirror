@@ -21,17 +21,13 @@ use \Psr\Log\LoggerInterface;
 
 class GeneralResponseValidator extends AbstractValidator {
 
-
-	/**
-	 * @var ErrorCodeProvider
-	 */
 	protected $errorCodeProvider;
 
 	protected $logger;
 
 	public function __construct(ResultInterfaceFactory $resultFactory,
-	                            ErrorCodeProvider $errorCodeProvider,
-	                            LoggerInterface $logger) {
+															ErrorCodeProvider $errorCodeProvider,
+															LoggerInterface $logger) {
 		parent::__construct($resultFactory);
 
 		$this->errorCodeProvider = $errorCodeProvider;
@@ -42,29 +38,33 @@ class GeneralResponseValidator extends AbstractValidator {
 	 * @inheritdoc
 	 */
 	public function validate(array $validationSubject) {
-		$response = json_decode(SubjectReader::readResponse($validationSubject)[0]);
+		$subjectResponse = SubjectReader::readResponse($validationSubject)[0];
+
+		$transactionResponse = $subjectResponse['transaction'];
+		$createTokenResponse = null;
+		if (isset($subjectResponse['token'])) {
+			$createTokenResponse = $subjectResponse['token'];
+		}
+
 		$isValid = true;
 		$errorMessages = [];
 		$errorCodes = [];
 
 		foreach ($this->getResponseValidators() as $validator) {
-			$validationResult = $validator($response);
+			$validationResult = $validator($transactionResponse);
 
 			if (!$validationResult[0]) {
 				$isValid = $validationResult[0];
 				$errorMessages = array_merge($errorMessages, $validationResult[1]);
 			}
 		}
-		if(!$isValid) {
-			$errorCodes = $this->errorCodeProvider->getErrorCodes($response);
+		if (!$isValid) {
+			$errorCodes = $this->errorCodeProvider->getErrorCodes($transactionResponse);
 		}
 
 		return $this->createResult($isValid, $errorMessages, $errorCodes);
 	}
 
-	/**
-	 * @return array
-	 */
 	protected function getResponseValidators() {
 		return [
 			function ($response) {

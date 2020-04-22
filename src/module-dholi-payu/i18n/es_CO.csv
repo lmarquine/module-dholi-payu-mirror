@@ -2,9 +2,6 @@
 "Applied over already converted value.",""Aplicado sobre el valor convertido."
 
 # -- B
-"Bar Code","Código de barras"
-"Boleto Link","Link do boleto"
-"Boleto PDF","Pdf do boleto"
 
 # -- C
 "Credit Card","Tarjeta de crédito"
@@ -12,8 +9,6 @@
 "Card Holder Name","Titular de la tarjeta de crédito"
 "Credit Card Number","Número de la tarjeta de crédito"
 "Credit Card CVV","Cód. de seguridad"
-"Click here to open the Boleto","Imprimir"
-"Click here to download the Boleto PDF","Descargar PDF"
 
 # -- D
 "Discount first installment","Descuento en efectivo"
@@ -42,8 +37,7 @@
 # -- P
 "Paying via","Pagando a través de"
 "PayU - General Settings","PayU - Configuraciones generales"
-"PayU - Boleto Settings","PayU - Recibo Bancario (BR)"
-"PayU - Credit Card Settings","PayU - Tarjeta de Crédito (BR,CO)"
+"PayU - Credit Card Settings","PayU - Tarjeta de Crédito"
 "PayU - Baloto Settings","PayU - Baloto (CO)"
 "PayU - Efecty Settings","PayU - Efecty (CO)"
 "Payment from applicable countries","Pago para Países Seleccionados"
@@ -54,7 +48,6 @@
 "PayU Order ID","Ordene en PayU"
 "PayU Transaction ID","Transacción en PayU"
 "Production","Producción"
-"Payment Link","Enlace de pago"
 "Process Payment","Pagar"
 "Processing...","Procesamiento..."
 

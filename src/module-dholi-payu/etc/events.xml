@@ -7,8 +7,4 @@
 	<event name="payment_method_assign_data_dholi_payments_payu_cc">
 		<observer name="dholi_payu_cc_gateway_data_assign" instance="Dholi\PayU\Observer\PayUCcDataAssignObserver"/>
 	</event>
-
-	<event name="payment_method_assign_data_dholi_payments_payu_boleto">
-		<observer name="dholi_payu_boleto_gateway_data_assign" instance="Dholi\PayU\Observer\PayUBoletoDataAssignObserver"/>
-	</event>
 </config>

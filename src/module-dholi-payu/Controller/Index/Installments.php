@@ -27,8 +27,8 @@ class Installments extends Action {
 	private $installmentsPlugin;
 
 	public function __construct(Context $context,
-	                            JsonFactory $resultJsonFactory,
-	                            InstallmentsPlugin $installmentsPlugin) {
+															JsonFactory $resultJsonFactory,
+															InstallmentsPlugin $installmentsPlugin) {
 		$this->resultJsonFactory = $resultJsonFactory;
 		$this->installmentsPlugin = $installmentsPlugin;
 
@@ -41,15 +41,29 @@ class Installments extends Action {
 
 		try {
 			if ($this->getRequest()->isAjax()) {
+				/*
 				$quote = $this->getOnepage()->getQuote();
+				if ($quote->isVirtual()) {
+					$address = $quote->getBillingAddress();
+				} else {
+					$address = $quote->getShippingAddress();
+				}
+				$interestAmount = 0;
+				$discountAmount = 0;
+				if ($address) {
+					$interestAmount = $address->getPayuBaseInterestAmount();
+					$discountAmount = $address->getPayuBaseDiscountAmount();
+				}
+				$amount = ($quote->getGrandTotal() - $interestAmount) + abs($discountAmount);
+				*/
 
 				$post = $this->getRequest()->getPostValue();
 				$paymentMethod = strtoupper($post['paymentMethod']);
-				$amount = $quote->getGrandTotal();
 				$receipt = $post['receipt'];
+				$amount = floatval($post['amount']);
 
 				$data = null;
-				if($receipt == 'A') {
+				if ($receipt == 'A') {
 					$data = $this->installmentsPlugin->byAntecipacao($paymentMethod, $amount);
 				} else {
 					$data = $this->installmentsPlugin->byFluxo($paymentMethod, $amount);

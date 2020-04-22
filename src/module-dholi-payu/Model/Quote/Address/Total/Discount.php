@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 
 class Discount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal {
 
-	const CODE = 'dholi_vista';
+	const CODE = 'dholi_discount';
 
 	private $logger;
 

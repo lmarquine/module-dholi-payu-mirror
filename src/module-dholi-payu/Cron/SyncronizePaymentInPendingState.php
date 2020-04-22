@@ -43,20 +43,11 @@ class SyncronizePaymentInPendingState {
 	}
 
 	public function execute() {
-		$filterCc = new Filter();
-		$filterCc->setField('method')->setValue(\Dholi\PayU\Model\Ui\Cc\ConfigProvider::CODE)->setConditionType('eq');
-
-		$filterBoleto = new Filter();
-		$filterBoleto->setField('method')->setValue(\Dholi\PayU\Model\Ui\Boleto\ConfigProvider::CODE)->setConditionType('eq');
-
-		$filterBaloto = new Filter();
-		$filterBaloto->setField('method')->setValue(\Dholi\PayU\Model\Ui\Baloto\ConfigProvider::CODE)->setConditionType('eq');
-
-		$filterEfecty = new Filter();
-		$filterEfecty->setField('method')->setValue(\Dholi\PayU\Model\Ui\Efecty\ConfigProvider::CODE)->setConditionType('eq');
+		$filter = new Filter();
+		$filter->setField('method')->setValue('dholi_payments_payu_%')->setConditionType('like');
 
 		$paymentGroup = new FilterGroup();
-		$paymentGroup->setFilters([$filterCc, $filterBoleto, $filterBaloto, $filterEfecty]);
+		$paymentGroup->setFilters([$filter]);
 
 		// status
 		$filterStatus = new Filter();

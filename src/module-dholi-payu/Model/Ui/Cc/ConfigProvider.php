@@ -26,6 +26,8 @@ class ConfigProvider implements ConfigProviderInterface {
 
 	const CODE = 'dholi_payments_payu_cc';
 
+	const CC_VAULT_CODE = 'dholi_payments_payu_cc_vault';
+
 	protected $urlBuilder;
 
 	private $config;
@@ -54,7 +56,6 @@ class ConfigProvider implements ConfigProviderInterface {
 
 	public function getConfig() {
 		$storeId = $this->session->getStoreId();
-		$currency = $this->config->getStoreCurrency($storeId);
 
 		$brands = [];
 		$showIcon = $this->ccConfig->isShowIcon($storeId);
@@ -92,6 +93,7 @@ class ConfigProvider implements ConfigProviderInterface {
 						'show' => $showIcon,
 						'brands' => $brands
 					],
+					'ccVaultCode' => self::CC_VAULT_CODE
 				]
 			];
 		}

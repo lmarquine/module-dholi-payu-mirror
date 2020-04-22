@@ -14,18 +14,23 @@ declare(strict_types=1);
 
 namespace Dholi\PayU\Gateway\Validator\Request;
 
+use Magento\Checkout\Model\Session;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Validator\ResultInterface;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
-use Magento\Checkout\Model\Session;
+use Magento\Vault\Model\Ui\TokenUiComponentProviderInterface;
+use Psr\Log\LoggerInterface;
 
 class CcRequestValidator extends \Magento\Payment\Gateway\Validator\AbstractValidator {
 
 	protected $checkoutSession;
 
-	public function __construct(ResultInterfaceFactory $resultFactory, Session $checkoutSession) {
+	private $logger;
+
+	public function __construct(ResultInterfaceFactory $resultFactory, Session $checkoutSession, LoggerInterface $logger) {
 		$this->checkoutSession = $checkoutSession;
+		$this->logger = $logger;
 
 		parent::__construct($resultFactory);
 	}
@@ -41,17 +46,24 @@ class CcRequestValidator extends \Magento\Payment\Gateway\Validator\AbstractVali
 			$isValid = false;
 			array_push($fails, __('Taxvat is required'));
 		}
+		$payment = $validationSubject['payment'];
+		$creditCardHash = $payment->getAdditionalInformation(TokenUiComponentProviderInterface::COMPONENT_PUBLIC_HASH);
 
-		$info = $validationSubject['payment'];
-		$ccNumber = $info->getCcNumber();
-		$cvvNumber = $info->getCcCid();
+		/**
+		 * buy with credit card token
+		 */
+		if (null === $creditCardHash) {
+			return $this->createResult($isValid, $fails);
+		}
 
+		$ccNumber = $payment->getCcNumber();
 		$card = new \Dholi\Payment\Lib\CreditCard\CardNumber();
 		if (!$card->passes(intval($ccNumber))) {
 			$isValid = false;
 			array_push($fails, $card->message());
 		}
 
+		$cvvNumber = $payment->getCcCid();
 		$cvv = new \Dholi\Payment\Lib\CreditCard\CardCvc($ccNumber);
 		if (!$cvv->passes(intval($cvvNumber))) {
 			$isValid = false;
@@ -59,7 +71,7 @@ class CcRequestValidator extends \Magento\Payment\Gateway\Validator\AbstractVali
 		}
 
 		$date = new \Dholi\Payment\Lib\CreditCard\CardExpirationDate();
-		$creditCardExpiry = $info->getCcExpYear() . '/' . $info->getCcExpMonth();
+		$creditCardExpiry = $payment->getCcExpYear() . '/' . $payment->getCcExpMonth();
 		if (!$date->passes($creditCardExpiry)) {
 			$isValid = false;
 			array_push($fails, $date->message());

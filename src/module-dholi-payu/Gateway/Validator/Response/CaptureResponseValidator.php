@@ -34,19 +34,20 @@ class CaptureResponseValidator extends AbstractValidator {
 	 * @inheritdoc
 	 */
 	public function validate(array $validationSubject) {
-		$response = json_decode(SubjectReader::readResponse($validationSubject)[0]);
+		$subjectResponse = SubjectReader::readResponse($validationSubject);
+		$transactionResponse = $subjectResponse['transaction'];
 
 		$isValid = true;
 		$errorMessages = [];
 		$errorCodes = [];
 
-		if (property_exists($response, 'code') && $response->code == 'ERROR') {
+		if (property_exists($transactionResponse, 'code') && $transactionResponse->code == 'ERROR') {
 			$isValid = false;
-			$errorMessages = array_merge($errorMessages, [$response->error]);
+			$errorMessages = array_merge($errorMessages, [$transactionResponse->error]);
 		}
 
-		if ($response->result->payload->transactions) {
-			$transaction = $response->result->payload->transactions[0];
+		if ($transactionResponse->result->payload->transactions) {
+			$transaction = $transactionResponse->result->payload->transactions[0];
 
 			$state = PayUTransactionState::memberByKey($transaction->transactionResponse->state);
 			if (!$state->isApproved()) {
@@ -56,7 +57,7 @@ class CaptureResponseValidator extends AbstractValidator {
 		}
 
 		if (!$isValid) {
-			$errorCodes = $this->errorCodeProvider->getErrorCodes($response);
+			$errorCodes = $this->errorCodeProvider->getErrorCodes($transactionResponse);
 		}
 
 		return $this->createResult($isValid, $errorMessages, $errorCodes);

@@ -2,9 +2,6 @@
 "Applied over already converted value.","Aplicado sobre o valor convertido."
 
 # -- B
-"Bar Code","Código de barras"
-"Boleto Link","Link do boleto"
-"Boleto PDF","Pdf do boleto"
 
 # -- C
 "Credit Card","Cartão de crédito"
@@ -12,8 +9,6 @@
 "Card Holder Name","Titular do cartão"
 "Credit Card Number","Número do cartão"
 "Credit Card CVV","Cód. de segurança"
-"Click here to open the Boleto","Imprimir boleto"
-"Click here to download the Boleto PDF","Baixar PDF do boleto"
 
 # -- D
 "Discount first installment","Desconto à vista"
@@ -42,8 +37,7 @@
 # -- P
 "Paying via","Pagando via"
 "PayU - General Settings","PayU - Configurações Gerais"
-"PayU - Boleto Settings","PayU - Boleto Bancário (BR)"
-"PayU - Credit Card Settings","PayU - Cartão de Crédito (BR,CO)"
+"PayU - Credit Card Settings","PayU - Cartão de Crédito"
 "PayU - Baloto Settings","PayU - Baloto (CO)"
 "PayU - Efecty Settings","PayU - Efecty (CO)"
 "Payment from applicable countries","Pagamento para Países Selecionados"
@@ -54,12 +48,14 @@
 "PayU Order ID","Pedido na PayU"
 "PayU Transaction ID","Transação na PayU"
 "Production","Produção"
-"Payment Link","Link de Pagamento"
 "Process Payment","Pagar"
 "Processing...","Processando..."
+"Payment method nonce can't be retrieved.","O método de pagamento não pode ser recuperado."
+"PayU - Vault","PayU - Tokenização"
 
 # -- S
 "Sending information to the payment system.","Enviando informações ao sistema de pagamento."
+"Stored Cards","Cartão de crédito armazenado"
 
 # -- T
 "Transaction State","Status da Transação"
@@ -72,9 +68,15 @@
 "Transaction.State.CANCELLED","Sua compra foi rejeitada."
 "Taxvat is required","O campo CPF / CNPJ não está presente ou não foi preenchido."
 
+# -- V
+"Vault Enabled","Habilitar tokenização"
+
 # -- Y
 "Your payment was processed by PayU","Sua solicitação foi processada com sucesso por PayU."
 "Your payment status is","Status do pagamento"
+
+# -- W
+"We store you payment information securely on PayU servers via SSL.","Armazenamos as informações de pagamento de forma segura nos servidores PayU via SSL."
 
 # --
 "APPROVED","A transação foi aprovada."

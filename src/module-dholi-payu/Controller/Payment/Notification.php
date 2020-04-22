@@ -69,7 +69,7 @@ class Notification extends Action implements CsrfAwareActionInterface {
 				}
 				$response = HttpStatus::OK()->getCode();
 			}
-		} catch (CommandException $ce) {
+		} catch (CommandException $e) {
 			$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getMessage()));
 			$this->logger->critical(sprintf("%s - Exception: %s", __METHOD__, $e->getTraceAsString()));
 			$salesConnection->rollBack();

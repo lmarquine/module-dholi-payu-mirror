@@ -16,7 +16,7 @@
 											<item name="children" xsi:type="array">
 												<item name="totals" xsi:type="array">
 													<item name="children" xsi:type="array">
-														<item name="dholi_vista" xsi:type="array">
+														<item name="dholi_discount" xsi:type="array">
 															<item name="component"  xsi:type="string">Dholi_PayU/js/view/checkout/cart/totals/discount</item>
 															<item name="sortOrder" xsi:type="string">21</item>
 															<item name="config" xsi:type="array">
@@ -66,13 +66,13 @@
 																		<item name="dholi_payments_payu_cc" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
-																		<item name="dholi_payments_payu_boleto" xsi:type="array">
-																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
-																		</item>
 																		<item name="dholi_payments_payu_baloto" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
 																		<item name="dholi_payments_payu_efecty" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																		<item name="dholi_payments_payu_cc_vault" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
 																	</item>

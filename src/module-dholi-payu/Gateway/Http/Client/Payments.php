@@ -30,41 +30,72 @@ class Payments implements ClientInterface {
 		$this->logger = $logger;
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function placeRequest(TransferInterface $transferObject) {
-		$bodyForLog = $this->clearBodyForLog($transferObject->getBody());
+		$submitTransaction = json_decode($transferObject->getBody(), true);
 
-		$log = [
-			'request' => $bodyForLog,
-			'request_uri' => $transferObject->getUri()
-		];
-		$result = [];
+		$log = ['requestUri' => $transferObject->getUri()];
+
+		$response = null;
 		$client = $this->clientFactory->create();
 		$client->setHeaders($transferObject->getHeaders());
 
 		try {
-			$client->post($transferObject->getUri(), $transferObject->getBody());
+			// token
+			$createTokenResponse = null;
+			if (isset($submitTransaction['creditCardToken'])) {
+				$expirationDate = $submitTransaction['creditCardToken']['expirationDate'];
+				$createToken = [
+					'language' => $submitTransaction['language'],
+					'command' => 'CREATE_TOKEN',
+					'merchant' => $submitTransaction['merchant'],
+					'creditCardToken' => $submitTransaction['creditCardToken']
+				];
+				$createToken = json_encode($createToken);
+				$client->post($transferObject->getUri(), $createToken);
 
-			$result = [$client->getBody()];
-			$log['response'] = $client->getBody();
+				$createTokenResponse = json_decode($client->getBody());
+
+				if ($createTokenResponse && $createTokenResponse->code == 'SUCCESS') {
+					if (null == $createTokenResponse->creditCardToken->expirationDate) {
+						$createTokenResponse->creditCardToken->expirationDate = $expirationDate;
+					}
+				}
+
+				unset($submitTransaction['creditCardToken']);
+			}
+			// payment
+			$submitTransaction = json_encode($submitTransaction);
+			$client->post($transferObject->getUri(), $submitTransaction);
+
+			$transactionResponse = json_decode($client->getBody());
+			$response = ['transaction' => $transactionResponse, 'token' => $createTokenResponse];
+
+			$log['request'] = $this->clearBodyForLog($submitTransaction);
+			$log['response'] = json_encode($response);
 		} catch (\Magento\Payment\Gateway\Http\ConverterException $e) {
 			throw $e;
 		} finally {
 			$this->logger->info(var_export($log, true));
 		}
 
-		return $result;
+		return [$response];
 	}
 
 	private function clearBodyForLog($body) {
-		$result = json_decode($body, true);
-		if (isset($result['transaction']['order']['partnerId'])) {
-			unset($result['transaction']['order']['partnerId']);
+		if (isset($body['transaction']['order']['partnerId'])) {
+			unset($body['transaction']['order']['partnerId']);
 		}
-		if (isset($result['transaction']['creditCard'])) {
-			unset($result['transaction']['creditCard']);
+		if (isset($body['transaction']['creditCard'])) {
+			unset($body['transaction']['creditCard']);
+		}
+		if (isset($body['creditCardToken'])) {
+			unset($body['creditCardToken']);
 		}
 
-		return json_encode($result);
+		return $body;
 	}
 
 }

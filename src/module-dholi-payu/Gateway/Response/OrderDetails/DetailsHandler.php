@@ -29,7 +29,7 @@ class DetailsHandler implements HandlerInterface {
 	 */
 	public function handle(array $handlingSubject, array $response) {
 		$paymentDataObject = SubjectReader::readPayment($handlingSubject);
-		$result = json_decode($response[0])->result;
+		$result = $response[0]['transaction']->result;
 		$payment = $paymentDataObject->getPayment();
 
 		if ($result->payload->transactions) {

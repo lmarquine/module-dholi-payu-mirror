@@ -12,27 +12,22 @@
 */
 declare(strict_types=1);
 
-namespace Dholi\PayU\Gateway\Request\Payment;
+namespace Dholi\PayU\Gateway\Request\Token;
 
+use Dholi\PayU\Api\Data\OrderPaymentPayUInterface;
 use Dholi\PayU\Gateway\PayU\Enumeration\PaymentMethod;
+use Dholi\PayU\Gateway\Request\Payment\AuthorizeDataBuilder;
 use Magento\Framework\UrlInterface;
+use Magento\Payment\Gateway\Command\CommandException;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Sales\Model\OrderRepository;
-use Magento\Vault\Model\Ui\TokenUiComponentProviderInterface;
+use Magento\Sales\Api\Data\OrderPaymentInterface;
 
 class CreditCardDataBuilder implements BuilderInterface {
 
-	const CREDIT_CARD = 'creditCard';
-
-	const NUMBER = 'number';
-
-	const SECURITY_CODE = 'securityCode';
-
-	const EXPIRATION_DATE = 'expirationDate';
-
-	const NAME = 'name';
+	const CREDIT_CARD_TOKEN_ID = 'creditCardTokenId';
 
 	const PAYMENT_METHOD = 'paymentMethod';
 
@@ -50,30 +45,23 @@ class CreditCardDataBuilder implements BuilderInterface {
 		$paymentDataObject = SubjectReader::readPayment($buildSubject);
 		$payment = $paymentDataObject->getPayment();
 
-		$creditCardHash = $payment->getAdditionalInformation(TokenUiComponentProviderInterface::COMPONENT_PUBLIC_HASH);
-
-		/**
-		 * buy with credit card token
-		 */
-		if (null === $creditCardHash) {
-			//return [];
+		$extensionAttributes = $payment->getExtensionAttributes();
+		$paymentToken = $extensionAttributes->getVaultPaymentToken();
+		if ($paymentToken === null) {
+			throw new CommandException(__('The Payment Token is not available to perform the request.'));
 		}
+		$details = json_decode($paymentToken->getTokenDetails() ?: '{}');
 
-		/**
-		 * Credit Card
-		 */
-		$creditCardNumber = preg_replace('/[\-\s]+/', '', $payment->getCcNumber());
-		$creditCardCvv = $payment->getCcCid();
-		$creditCardExp = $payment->getCcExpYear() . '/' . $payment->getCcExpMonth();
+		$payment->addData(
+			[
+				OrderPaymentInterface::CC_TYPE => $details->type,
+				OrderPaymentInterface::CC_LAST_4 => substr($details->maskedCC, -4)
+			]
+		);
 
 		return [AuthorizeDataBuilder::TRANSACTION => [
-			self::CREDIT_CARD => [
-				self::NUMBER => $creditCardNumber,
-				self::EXPIRATION_DATE => $creditCardExp,
-				self::SECURITY_CODE => $creditCardCvv,
-				self::NAME => $payment->getCcOwner()
-			],
-			self::PAYMENT_METHOD => PaymentMethod::memberByKey($payment->getCcType())->getCode(),
+			self::CREDIT_CARD_TOKEN_ID => $paymentToken->getGatewayToken(),
+			self::PAYMENT_METHOD => PaymentMethod::memberByKey($details->type)->getCode(),
 			self::COOKIE => $payment->getAdditionalInformation('sessionId'),
 			self::USER_AGENT => $payment->getAdditionalInformation('userAgent'),
 			'extraParameters' => [

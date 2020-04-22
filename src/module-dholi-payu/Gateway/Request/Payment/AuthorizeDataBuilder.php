@@ -31,9 +31,6 @@ class AuthorizeDataBuilder implements BuilderInterface {
 
 	const TYPE = 'type';
 
-	/**
-	 * Order
-	 */
 	const ORDER = 'order';
 
 	const ACCOUNT_ID = 'accountId';
@@ -52,12 +49,7 @@ class AuthorizeDataBuilder implements BuilderInterface {
 
 	const IP_ADDRESS = 'ipAddress';
 
-	/**
-	 * Buyer
-	 */
 	const BUYER = 'buyer';
-
-	const MERCHANT_BUYER_ID = 'merchantBuyerId';
 
 	const FULL_NAME = 'fullName';
 
@@ -90,8 +82,6 @@ class AuthorizeDataBuilder implements BuilderInterface {
 	 */
 	const PAYER = 'payer';
 
-	const MERCHANT_PAYER_ID = 'merchantPayerId';
-
 	protected $urlBuilder;
 
 	private $orderRepository;
@@ -106,12 +96,6 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		$this->orderRepository = $orderRepository;
 	}
 
-	/**
-	 * Builds ENV request
-	 *
-	 * @param array $buildSubject
-	 * @return array
-	 */
 	public function build(array $buildSubject) {
 		$paymentDataObject = SubjectReader::readPayment($buildSubject);
 		$order = $paymentDataObject->getPayment()->getOrder();
@@ -144,15 +128,16 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		$name = trim($shippingAddress->getFirstname()) . ' ' . trim($shippingAddress->getLastname());
 		$taxvat = ($order->getCustomerTaxvat() ? $order->getCustomerTaxvat() : $order->getBillingAddress()->getVatId());
 		$taxvat = preg_replace('/\D/', '', $taxvat);
+		$street = sprintf("%s, %s", substr($shippingAddress->getStreetLine1(), 0, 100), substr($shippingAddress->getStreetLine2(), 0, 100));
+
 		$buyer = [
-			//self::MERCHANT_BUYER_ID => '',
 			self::FULL_NAME => substr($name, 0, 150),
 			self::EMAIL_ADDRESS => $billingAddress->getEmail(),
 			self::CONTACT_PHONE => preg_replace('/\D/', '', $shippingAddress->getTelephone()),
 			self::DNI_NUMBER => $taxvat,
 			self::SHIPPING_ADDRESS => [
-				self::STREET_1 => substr($shippingAddress->getStreetLine1(), 0, 100),
-				self::STREET_2 => substr($shippingAddress->getStreetLine2(), 0, 100),
+				self::STREET_1 => $street,
+				//self::STREET_2 => substr($shippingAddress->getStreetLine1(), 0, 100), FIXME: o M2 só retorna linha 1 e 2
 				self::CITY => $shippingAddress->getCity(),
 				self::STATE => $shippingAddress->getRegionCode(),
 				self::COUNTRY => $shippingAddress->getCountryId(),
@@ -187,15 +172,12 @@ class AuthorizeDataBuilder implements BuilderInterface {
 		/**
 		 * Payer
 		 */
-		$payment = $paymentDataObject->getPayment();
 		$payerTaxVat = $taxvat;
 		$payerFone = $billingAddress->getTelephone();
-		//$payerBirthDate = $order->getCustomerDob();
 
 		$name = trim($billingAddress->getFirstname()) . ' ' . trim($billingAddress->getLastname());
 		$result[self::PAYER] = [
 			self::EMAIL_ADDRESS => $billingAddress->getEmail(),
-			//self::MERCHANT_PAYER_ID => '',
 			self::FULL_NAME => $name,
 			//self::BIRTH_DATE => $payerBirthDate,
 			self::DNI_NUMBER => $payerTaxVat,

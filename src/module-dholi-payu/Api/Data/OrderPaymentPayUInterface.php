@@ -27,5 +27,6 @@ interface OrderPaymentPayUInterface {
 	const TRANSACTION_STATE = 'payu_transaction_state';
 
 	const CC_NUMBER_ENC = 'cc_number';
+
 	const CC_CID_ENC = 'cc_cid';
 }

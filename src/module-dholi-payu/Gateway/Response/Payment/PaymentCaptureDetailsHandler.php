@@ -22,15 +22,12 @@ use Magento\Sales\Model\Order;
 
 class PaymentCaptureDetailsHandler implements HandlerInterface {
 
-	public function __construct() {
-	}
-
 	/**
 	 * @inheritdoc
 	 */
 	public function handle(array $handlingSubject, array $response) {
 		$paymentDataObject = SubjectReader::readPayment($handlingSubject);
-		$result = json_decode($response[0])->result;
+		$result = $response[0]['transaction']->result;
 
 		if ($result->payload->transactions) {
 			$transaction = $result->payload->transactions[0];
