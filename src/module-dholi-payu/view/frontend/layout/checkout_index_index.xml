@@ -66,12 +66,6 @@
 																		<item name="dholi_payments_payu_cc" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
-																		<item name="dholi_payments_payu_baloto" xsi:type="array">
-																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
-																		</item>
-																		<item name="dholi_payments_payu_efecty" xsi:type="array">
-																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
-																		</item>
 																		<item name="dholi_payments_payu_cc_vault" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>

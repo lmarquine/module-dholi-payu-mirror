@@ -40,13 +40,13 @@
         </div>
 
         <div class="field installment required" data-bind="visible: installments().length > 1">
-            <label data-bind="attr: {for: getCode() + '_installments'}" class="label">
+            <label data-bind="attr: {for: getId() + '_installments'}" class="label">
                 <span data-bind="i18n: 'Payment option'"></span>
             </label>
             <div class="control">
                 <select  name="payment[cc_installments]"
-                         data-bind="attr: {id: getCode() + '_installments',
-															 'data-container': getCode() + '-installments',
+                         data-bind="attr: {id: getId() + '_installments',
+															 'data-container': getId() + '-installments',
 															 'data-validate': JSON.stringify({'required':true})},
 															  options: installments,
 															  optionsText: 't',

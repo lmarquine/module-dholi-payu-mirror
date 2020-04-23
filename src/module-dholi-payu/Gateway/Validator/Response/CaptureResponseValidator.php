@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.5
+* @version      2.0.0
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -34,7 +34,7 @@ class CaptureResponseValidator extends AbstractValidator {
 	 * @inheritdoc
 	 */
 	public function validate(array $validationSubject) {
-		$subjectResponse = SubjectReader::readResponse($validationSubject);
+		$subjectResponse = SubjectReader::readResponse($validationSubject)[0];
 		$transactionResponse = $subjectResponse['transaction'];
 
 		$isValid = true;

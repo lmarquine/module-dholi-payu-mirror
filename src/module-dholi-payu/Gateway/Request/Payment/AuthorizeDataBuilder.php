@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.5
+* @version      2.0.0
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -137,7 +137,7 @@ class AuthorizeDataBuilder implements BuilderInterface {
 			self::DNI_NUMBER => $taxvat,
 			self::SHIPPING_ADDRESS => [
 				self::STREET_1 => $street,
-				//self::STREET_2 => substr($shippingAddress->getStreetLine1(), 0, 100), FIXME: o M2 só retorna linha 1 e 2
+				self::STREET_2 => '', //FIXME: o M2 só retorna linha 1 e 2
 				self::CITY => $shippingAddress->getCity(),
 				self::STATE => $shippingAddress->getRegionCode(),
 				self::COUNTRY => $shippingAddress->getCountryId(),

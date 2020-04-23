@@ -6,7 +6,7 @@
 * @category     Dholi
 * @package      Modulo PayU
 * @copyright    Copyright (c) 2019 dholi (https://www.dholi.dev)
-* @version      1.0.5
+* @version      2.0.0
 * @license      https://www.dholi.dev/license/
 *
 */
@@ -28,8 +28,10 @@ class ResponseValidator extends GeneralResponseValidator {
 			[
 				function ($response) {
 					return [
-						isset($response->code) && isset($response->transactionResponse) && PayUTransactionState::memberByKey($response->transactionResponse->state)->isClientStatusSuccess(),
-						[$response->transactionResponse->paymentNetworkResponseErrorMessage]
+						isset($response->code) &&
+						isset($response->transactionResponse) &&
+						PayUTransactionState::memberByKey($response->transactionResponse->state)->isClientStatusSuccess(),
+						[$response->transactionResponse->paymentNetworkResponseErrorMessage ?? null]
 					];
 				}
 			]

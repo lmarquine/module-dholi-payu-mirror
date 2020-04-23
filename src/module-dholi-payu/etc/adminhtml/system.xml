@@ -5,8 +5,6 @@
 			<group id="dholi_payments">
 				<include path="Dholi_PayU::system/basic.xml"/>
 				<include path="Dholi_PayU::system/cc.xml"/>
-				<include path="Dholi_PayU::system/baloto.xml"/>
-				<include path="Dholi_PayU::system/efecty.xml"/>
 			</group>
 		</section>
 	</system>

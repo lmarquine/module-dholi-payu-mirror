@@ -5,6 +5,10 @@
 	</event>
 
 	<event name="payment_method_assign_data_dholi_payments_payu_cc">
-		<observer name="dholi_payu_cc_gateway_data_assign" instance="Dholi\PayU\Observer\PayUCcDataAssignObserver"/>
+		<observer name="dholi_payu_cc_gateway_data_assign" instance="Dholi\PayU\Observer\CreditCadDataAssignObserver"/>
+	</event>
+
+	<event name="payment_method_assign_data_dholi_payments_payu_cash">
+		<observer name="dholi_payu_cash_gateway_data_assign" instance="Dholi\PayU\Observer\CashDataAssignObserver"/>
 	</event>
 </config>

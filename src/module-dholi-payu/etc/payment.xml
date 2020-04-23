@@ -4,11 +4,5 @@
 		<group id="dholi_payments_payu_cc">
 			<label>Dholi - PayU Credit Card</label>
 		</group>
-		<group id="dholi_payments_payu_baloto">
-			<label>Dholi - PayU Baloto</label>
-		</group>
-		<group id="dholi_payments_payu_efecty">
-			<label>Dholi - PayU Efecty</label>
-		</group>
 	</groups>
 </payment>
