@@ -34,16 +34,16 @@ Boleto bancário - instale o pacote [PayU Brasil](https://packagist.org/packages
 Baloto + Effecty - instale o pacote [PayU Colômbia](https://packagist.org/packages/dholi/module-dholi-payu-co).
 
 
-### Página do Projeto
+## Página do Projeto
 Consule a [página do projeto PayU](https://www.dholi.dev/payu) para mais detalhes.
 
-### Composer
+## Composer
 Consule a [página do projeto no Packagist](https://packagist.org/packages/dholi/module-dholi-payu) para mais detalhes.
 
-### GitHub
+## GitHub
 Consule a [página do projeto no GitHub](https://github.com/dholidev/module-dholi-payu-mirror) para mais detalhes.
 
-### Base de Ajuda
+## Base de Ajuda
 Consule a [base de ajuda](https://docs.dholi.dev/payu) para mais detalhes.
 
 ### Recursos e Funcionalidades
