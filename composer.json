@@ -1,7 +1,7 @@
 {
   "name": "dholi/module-dholi-payu",
   "type": "magento2-module",
-  "description": "Integração PayU para Magento 2 | dholi.dev",
+  "description": "Processa pagamentos com cartão de crédito e tokenização com PayU Latam para Magento 2 | dholi.dev",
   "homepage": "https://www.dholi.dev/projetos/payu",
   "keywords": [
     "magento",
