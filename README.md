@@ -2,7 +2,7 @@
 
 A PayU é uma solução completa em pagamentos online, presente em quatro continentes. A PayU oferece serviços financeiros para compradores e vendedores pela internet.
 
-## Cartões de Crédito com Tokenização
+## Cartões de Crédito + Tokenização
 
 #### PayU Argentina
 American Express, Diners, Mastercard, Visa
