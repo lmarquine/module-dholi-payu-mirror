@@ -26,20 +26,21 @@
     </div>
 
     <div class="payment-method-content">
-        <each args="getRegion('messages')" render=""></each>
-        <div class="payment-method-billing-address">
-            <each args="data: $parent.getRegion(getBillingAddressFormName()), as: '$item'">
-                <render args="$item.getTemplate()"/>
-            </each>
-        </div>
+        <fieldset class="fieldset vault method" data-bind="attr: {id: 'payment_form_' + getId()}">
+            <each args="getRegion('messages')" render=""></each>
+            <div class="payment-method-billing-address">
+                <each args="data: $parent.getRegion(getBillingAddressFormName()), as: '$item'">
+                    <render args="$item.getTemplate()"/>
+                </each>
+            </div>
 
-        <div class="checkout-agreements-block">
-            <!-- ko foreach: $parent.getRegion('before-place-order') -->
-            <!-- ko template: getTemplate() --><!-- /ko -->
-            <!--/ko-->
-        </div>
+            <div class="checkout-agreements-block">
+                <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!--/ko-->
+            </div>
 
-        <div class="field installment required" data-bind="visible: installments().length > 1">
+            <div class="field installment required" data-bind="visible: installments().length > 1">
             <label data-bind="attr: {for: getId() + '_installments'}" class="label">
                 <span data-bind="i18n: 'Payment option'"></span>
             </label>
@@ -55,6 +56,7 @@
                 </select>
             </div>
         </div>
+        </fieldset>
 
         <div class="actions-toolbar">
             <div class="primary">
